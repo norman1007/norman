@@ -1,0 +1,94 @@
+<%- include('../../includes/header.ejs') %>
+
+<form class="ui form" action="/admin/login" method="POST">
+	<div class="ui container" style="padding-top:10%">
+		<div class="ui grid center aligned">
+			<div class="row">
+				<div class="sixteen wide tablet six wide computer column">
+					<div class="ui left aligned segment">
+
+						<div id="form1" action="/daftar-masuk" method="POST">
+
+							<h4 class="ui header center aligned">
+								<img src="/img/sispa.jpeg" alt="stagblogo" class="ui small image"><br />
+								<div class="content">
+									SISTEM PENGURUSAN ASET
+									<div class="ui divider"></div>
+
+
+									<!-- error checking here -->
+									<% if(error && error.length > 0) { %>
+									<div class="ui red sub header"><%= error %></div>
+									<% } else { %>
+									<div class="sub header">Log Masuk ke akaun anda</div>
+									<% } %>
+
+								</div>
+							</h4>
+
+							<div class="field">
+								<label>
+									No. Pekerja :
+								</label>
+								<div class="ui fluid icon input">
+									<input class="<%= boxColorValidate.find(e => e.param === 'username') ? 'invalid' : '' %>" id="u_name" type="text" name="username" placeholder="Masukkan No. Pekerja Anda"
+										value="<%= oldInput.username %>" autofocus="autofocus" autocomplete="off"
+										style="width:100%!important;min-width:100%;width:100%;" />
+									<i class="icon user"></i>
+								</div>
+							</div>
+							<div class="field">
+								<label>
+									Katalaluan :
+								</label>
+								<div class="ui fluid icon input">
+									<input class="<%= boxColorValidate.find(e => e.param === 'password') ? 'invalid' : '' %>" name="password" id="u_pass" type="password" placeholder="Masukkan Katalaluan Anda"
+										value="<%= oldInput.password %>" autocomplete="off" style="width:100%!important;min-width:100%;width:100%;" />
+									<i class="icon key"></i>
+								</div>
+							</div>
+							<div class="field">
+								<div class="ui checkbox">
+									<input type="checkbox" onclick="revealPassword()">
+									<label>Lihat katalaluan anda</label>
+								</div>
+							</div>
+								<div class="field">
+									<button class="ui primary right labeled icon button fluid">
+										Log Masuk
+										<i class="icon sign in"></i>
+									</button>
+
+									<a class="ui black right labeled icon button fluid" href="../pentadbir">
+										Pentadbir Sistem
+										<i class="icon spy"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</form>
+
+
+<%- include('../../includes/footer.ejs') %>
+
+<script>
+	// Color background
+	var colors = ["#FFE066", "#247BA0", "#307473", "#EFD28D", "#E1B07E", "#CCE2FF", "#32936F", "#767676"];
+	var rand = Math.floor(Math.random() * colors.length);
+	$('body').css("background-color", colors[rand]);
+
+	function revealPassword() {
+		// var reveal = document.getElementById("u_pass");
+		var reveal = document.querySelector('u_pass');
+		if(reveal.type === 'password') {
+			reveal.type = "text";
+		} else {
+			reveal.type = "password";
+		}
+	}
+
+</script>

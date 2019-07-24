@@ -1,0 +1,315 @@
+<!--sidebar-->
+<div class="ui sidebar vertical left menu overlay  borderless visible sidemenu inverted  grey"
+    style="-webkit-transition-duration: 0.1s; transition-duration: 0.1s;" data-color="grey">
+    <a class="item logo" href="/">
+        <img src="/img/logo.png" alt="stagblogo" /><img src="/img/sispa.jpeg" alt="stagblogo" class="displaynone" />
+    </a>
+    <div class="ui accordion inverted">
+
+        <a class="title item">
+            <i class="ion-ios-home titleIcon icon"></i> Laman Utama <i class="dropdown icon"></i>
+        </a>
+        <div class="content">
+            <a class="item" href="/index">
+                Index
+            </a>
+        </div>
+
+        <div class="title item">
+            <i class="ion-ios-folder titleIcon icon"></i>
+
+            <i class="dropdown icon"></i> Senarai Aset
+        </div>
+        <div class="content">
+            <a class="item" href="/index/assets">
+                Lihat Senarai
+            </a>
+
+            <a class="item" href="/index/assets/new">
+                Daftar Aset
+            </a>
+        </div>
+        <div class="title item">
+            <i class="ion-map titleIcon  icon"></i>
+
+            <i class="dropdown icon"></i> Peta
+        </div>
+        <div class="content">
+            <a class="item" href="#">
+                Akan Datang
+            </a>
+        </div>
+        <div class="title item">
+            <i class="ion-android-clipboard titleIcon icon"></i>
+
+            <i class="dropdown icon"></i> Pembekal
+        </div>
+        <div class="content">
+            <a class="item" href="/index/suppliers">
+                Senarai Pembekal
+            </a>
+        </div>
+        <div class="title item">
+            <i class="ion-pin titleIcon icon"></i>
+
+            <i class="dropdown icon"></i> Penempatan
+        </div>
+        <div class="content">
+            <a class="item" href="/index/placements">
+                Lihat
+            </a>
+        </div>
+        <div class="title item">
+            <i class="ion-android-chat titleIcon icon"></i>
+
+            <i class="dropdown icon"></i> Perbincangan
+        </div>
+        <div class="content">
+            <a class="item" href="#">
+                Akan Datang
+            </a>
+        </div>
+
+        <div class="title item">
+            <i class="ion-wrench titleIcon icon"></i>
+
+            <i class="dropdown icon"></i> Selenggara
+        </div>
+        <div class="content">
+            <a class="item" href="#">
+                Tukar Katalaluan
+            </a>
+        </div>
+
+        <% if(currentUser && currentUser.isAdmin) { %>
+        <div class="title item">
+            <i class="ion-key titleIcon icon"></i>
+
+            <i class="dropdown icon"></i> Admin
+        </div>
+        <div class="content">
+            <a class="item" href="/admin">
+                Panel
+            </a>
+        </div>
+        <% } %>
+        <div class="title item">
+            <i class="ion-person titleIcon icon"></i>
+
+            <i class="dropdown icon"></i> Profile
+        </div>
+        <div class="content">
+            <a class="item" href="/profile-saya/<%= currentUser._id %>">
+                Profile Saya
+            </a>
+        </div>
+
+    </div>
+
+    <div class="ui dropdown item displaynone scrolling">
+        <span>Laman Utama</span>
+        <i class="ion-ios-home icon"></i>
+
+        <div class="menu">
+            <div class="header">
+                Laman Utama
+            </div>
+            <div class="ui divider"></div>
+            <a class="item" href="/index">
+                Index
+            </a>
+        </div>
+    </div>
+
+
+    <div class="ui dropdown item displaynone scrolling">
+        <span>Senarai Aset</span>
+        <i class="ion-ios-folder icon"></i>
+        <div class="menu">
+            <div class="header">
+                Senarai Aset
+            </div>
+            <div class="ui divider"></div>
+            <a class="item" href="/index/assets">
+                Lihat Senarai
+            </a>
+            <a class="item" href="/index/assets/new">
+                Daftar Aset
+            </a>
+        </div>
+    </div>
+    <div class="ui dropdown item displaynone scrolling">
+        <span>Peta</span>
+        <i class="ion-map icon"></i>
+        <div class="menu">
+            <div class="header">
+                Peta
+            </div>
+            <div class="ui divider"></div>
+            <a class="item" href="#">
+                Akan Datang
+            </a>
+        </div>
+    </div>
+    <div class="ui dropdown item displaynone scrolling">
+        <span>Pembekal</span>
+        <i class="ion-android-clipboard icon"></i>
+        <div class="menu">
+            <div class="header">
+                Pembekal
+            </div>
+            <div class="ui divider"></div>
+            <a class="item" href="/index/suppliers">
+                Senarai Pembekal
+            </a>
+        </div>
+    </div>
+    <div class="ui dropdown item displaynone scrolling">
+        <span>Penempatan</span>
+        <i class="ion-mouse icon"></i>
+        <div class="menu">
+            <div class="header">
+                Penempatan
+            </div>
+            <div class="ui divider"></div>
+            <a class="item" href="/index/placements">
+                Lihat
+            </a>
+        </div>
+    </div>
+    <div class="ui dropdown item displaynone scrolling">
+        <span>Perbincangan</span>
+        <i class="ion-android-chat icon"></i>
+
+        <div class="menu">
+            <div class="header">
+                Perbincangan
+            </div>
+            <div class="ui divider"></div>
+            <a class="item" href="#">
+                Akan Datang
+            </a>
+        </div>
+    </div>
+    <div class="ui dropdown item displaynone scrolling">
+        <span>Selenggara</span>
+        <i class="ion-wrench icon"></i>
+
+        <div class="menu">
+            <div class="header">
+                Selenggara
+            </div>
+            <div class="ui divider"></div>
+            <a class="item" href="#">
+                Tukar Katalaluan
+            </a>
+        </div>
+    </div>
+    <% if(currentUser && currentUser.isAdmin) { %>
+    <div class="ui dropdown item displaynone scrolling">
+        <span>Admin</span>
+        <i class="ion-key icon"></i>
+
+        <div class="menu">
+            <div class="header">
+                Admin Panel
+            </div>
+            <div class="ui divider"></div>
+            <a class="item" href="/admin">
+                Panel
+            </a>
+        </div>
+    </div>
+    <% } %>
+    <div class="ui dropdown item displaynone scrolling">
+        <span>Profile</span>
+        <i class="ion-person icon"></i>
+
+        <div class="menu">
+            <div class="header">
+                <%= currentUser.username %>
+            </div>
+            <div class="ui divider"></div>
+            <a class="item" href="/user/<%= currentUser._id %>">
+                Profile Saya
+            </a>
+            <a class="item" href="/logout">
+                Log Keluar
+            </a>
+        </div>
+    </div>
+    <div class="ui divider"></div>
+    <a class="item" href="/print">
+        <i class="ion-printer icon"></i> <span class="colhidden">Senarai Cetakan</span>
+    </a>
+    <div class="ui divider"></div>
+    <a id="numVal" class="item">
+         <span class="colhidden">Sedang Memuat...</span>
+    </a>
+    <div class="ui divider"></div>
+    <div id="usersList">
+        <a class="item">
+            <div class="statistic">
+                <div class="value">
+                    <img src="/img/avatar/carol.png" class="mini ui rounded inline image"> <strong>Sedang Memuat...</strong>
+                </div>
+            </div>
+        </a>
+    </div>
+    <!-- <a class="item">
+        <div class="ui inverted progress tiny teal" id="sidebar_progress2">
+            <div class="bar">
+
+            </div>
+            <div class="label colhidden" style="margin-top: 10px"><span class="colhidden">Disk Space Usage</span></div>
+        </div>
+    </a>
+    <a class="item">
+        <div class="ui inverted progress tiny blue" id="sidebar_progress3">
+            <div class="bar">
+
+            </div>
+            <div class="label colhidden" style="margin-top: 10px"><span class="colhidden">Earn money</span></div>
+        </div>
+
+    </a>
+        <div class="ui divider"></div>
+
+        <a class="item hiddenCollapse">
+            <div class="ui one mini inverted statistics">
+                <div class="statistic">
+                    <div class="value">
+                        3654
+                    </div>
+                    <div class="label">
+                        Downloads
+                    </div>
+                </div>
+                <div class="statistic">
+                    <div class="text value">
+                        Three<br> Thousand
+                    </div>
+                    <div class="label">
+                        Views
+                    </div>
+                </div>
+                <div class="statistic">
+                    <div class="value">
+                        <i class="ion-paperclip icon"></i> 15
+                    </div>
+                    <div class="label">
+                        Attached File
+                    </div>
+                </div>
+                <div class="statistic">
+                    <div class="value">
+                        <img src="/img/avatar/carol.png" class="ui circular inline image"> 21254
+                    </div>
+                    <div class="label">
+                        Team Members
+                    </div>
+                </div>
+            </div>
+        </a> -->
+</div>
+<!--sidebar-->

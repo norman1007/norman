@@ -1,0 +1,16 @@
+(node:12076) DeprecationWarning: collection.count is deprecated, and will be removed in a future version. Use collection.countDocuments or collection.estimatedDocumentCount instead
+(node:12076) UnhandledPromiseRejectionWarning: CastError: Cast to ObjectId failed for value "5cecd7505e6f983ad060dnjdnd" at path "_id" for model "Kewpa3"
+    at new CastError (C:\Users\norma\Desktop\development\sispa\sispa_V2\node_modules\mongoose\lib\error\cast.js:29:11)
+    at ObjectId.cast (C:\Users\norma\Desktop\development\sispa\sispa_V2\node_modules\mongoose\lib\schema\objectid.js:232:11)
+    at ObjectId.SchemaType.applySetters (C:\Users\norma\Desktop\development\sispa\sispa_V2\node_modules\mongoose\lib\schematype.js:845:12)
+    at ObjectId.SchemaType._castForQuery (C:\Users\norma\Desktop\development\sispa\sispa_V2\node_modules\mongoose\lib\schematype.js:1248:15)
+    at ObjectId.SchemaType.castForQuery (C:\Users\norma\Desktop\development\sispa\sispa_V2\node_modules\mongoose\lib\schematype.js:1238:15)
+    at ObjectId.SchemaType.castForQueryWrapper (C:\Users\norma\Desktop\development\sispa\sispa_V2\node_modules\mongoose\lib\schematype.js:1217:15)
+    at cast (C:\Users\norma\Desktop\development\sispa\sispa_V2\node_modules\mongoose\lib\cast.js:307:32)
+    at model.Query.Query.cast (C:\Users\norma\Desktop\development\sispa\sispa_V2\node_modules\mongoose\lib\query.js:4257:12)
+    at model.Query.Query._castConditions (C:\Users\norma\Desktop\development\sispa\sispa_V2\node_modules\mongoose\lib\query.js:1722:10)
+    at model.Query.Query._findOne (C:\Users\norma\Desktop\development\sispa\sispa_V2\node_modules\mongoose\lib\query.js:1960:8)
+    at process.nextTick (C:\Users\norma\Desktop\development\sispa\sispa_V2\node_modules\kareem\index.js:369:33)
+    at process._tickCallback (internal/process/next_tick.js:61:11)
+(node:12076) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 1)
+(node:12076) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.

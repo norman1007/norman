@@ -1,0 +1,7 @@
+.data_table {
+    counter-increment: assetTable;
+}
+
+.data_table::before {
+    content: counter(assetTable) '. ';
+}

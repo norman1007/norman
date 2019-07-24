@@ -1,0 +1,181 @@
+<div class="ui center aligned secondary segment">
+    <% p_kend.forEach(function(p_kend) { %>
+    <% if(currentUser.username === p_kend.p_kend_name.username) { %>
+    <a class="ui orange labeled icon button" href="/index/assets/<%= asset._id %>/maintainance/new">
+        Borang Kew.PA-15
+        <i class="wrench icon"></i>
+    </a>
+    <div class="ui horizontal divider">
+        Atau
+    </div>
+    <% } else {%>
+    <div class="ui button" data-tooltip="Hanya Pegawai Kenderaan yang dibenarkan untuk membuat daftar selenggara."
+        data-position="top center">
+        Borang Kew.PA-15
+    </div>
+    <div class="ui horizontal divider">
+        Atau
+    </div>
+    <% } %>
+    <% }); %>
+    <div class="ui left icon action input">
+        <i class="search icon"></i>
+        <input type="text" placeholder="Data selenggara #">
+        <div class="ui blue submit button">Cari</div>
+    </div>
+</div>
+
+<div class="ui hidden divider"></div>
+
+<% if(maintainances.total === 0) { %>
+<table class="ui compact selectable striped celled table tablet stackable" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Deskripsi kerosakan</th>
+            <th>Tarikh</th>
+            <th>Nilai</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="center aligned" colspan="4">Tiada rekod</td>
+        </tr>
+    </tbody>
+</table>
+<% } else { %>
+
+<% maintainances.docs.forEach(function(mtnc) { %>
+<table class="ui celled structured table">
+    <thead>
+        <tr class="center aligned">
+            <th>( a )<br>Tarikh</th>
+            <th>( b )<br>Jenis Penyenggaraan</th>
+            <th>( c )<br>Butir - butir Kerja</th>
+            <th>( d )<br>No. Pesanan Kerajaan / No. Kontrak dan Tarikh</th>
+            <th>( e )<br>Nama Syarikat / Jabatan Yang Menyenggara</th>
+            <th>( f )<br>Kos ( RM )</th>
+            <th>( g )<br>Nama dan Jawatan</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><%= mtnc.date.toLocaleDateString(); %></td>
+            <td><%= mtnc.title %></td>
+
+            <td width="20%">
+                <% for(var i = 0; i < mtnc.description.length; i++ ) { %>
+                <%= mtnc.description[i] %><br>
+                <div class="ui divider"></div>
+                <% } %>
+            </td>
+
+            <td class="center aligned"><label class="ui large label"><%= mtnc.lOrderMtnc %></label></td>
+            <td><%= mtnc.vendor %></td>
+
+            <td class="center aligned" width="20%">
+                <% for(var i = 0; i < mtnc.value.length; i++ ) { %>
+                RM <%= formatNumber(mtnc.value[i]) %><br>
+                <div class="ui divider"></div>
+                <% } %>
+            </td>
+
+            <td class="center aligned">
+                <%= mtnc.lastPerson %>
+                <br>
+                <label class="ui yellowli label"><%= mtnc.lastPerson_position %></label>
+
+            </td>
+        </tr>
+        <!-- <tr>
+                <td></td>
+                <td></td>
+            </tr> -->
+        <tr>
+            <td colspan="5" class="right aligned"><strong>Jumlah</strong></td>
+            <td colspan="2"><strong>RM <%= formatNumber(mtnc.total) %></strong>
+            </td>
+        </tr>
+        <tr>
+            <% p_kend.forEach(function(p_kend) { %>
+            <% if(currentUser.username === p_kend.p_kend_name.username) { %>
+            <% if(currentUser && currentUser.isAdmin || p_kend.p_kend_name.username) { %>
+            <td colspan="2">Tarikh rekod: <%= mtnc.createdAt %></td>
+            <td colspan="3">Direkod oleh: <%= mtnc.userId.department %></td>
+            <td colspan="2" class="negative center aligned">
+                <form style="margin:0" class="delete"
+                    action="/index/assets/<%= asset._id %>/maintainances/<%= mtnc._id %>?_method=DELETE" method="POST">
+                    <button type="submit"
+                        style="background-color: transparent; color:crimson; font-weight: bold; background-repeat: no-repeat; border: none; cursor: pointer; overflow: hidden;">
+                        Padam
+                        <i class="red trash icon"></i>
+                    </button>
+                </form>
+            </td>
+            <% } else { %>
+            <td colspan="2">Tarikh rekod: <%= mtnc.createdAt %></td>
+            <td colspan="3">Direkod oleh: <%= mtnc.userId.department %></td>
+            <td colspan="2" class="disabled negative center aligned">
+                <del>
+                    Padam
+                    <i class="red trash icon"></i>
+                </del>
+            </td>
+            <!--check user control-->
+            <% } %>
+            <!--check logged in user if its same as pegawai kenderaan-->
+            <% } %>
+            <!--Loop pegawai kenderaan to get username of pegawai kenderaan-->
+            <% }) %>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="7">
+                <% if(maintainances.pages && maintainances.pages > 0) { %>
+                <!--check logged in user if its same as pegawai kenderaan-->
+                <% p_kend.forEach(function(p_kend) { %>
+                <!--Loop pegawai kenderaan to get username of pegawai kenderaan-->
+                <% if(currentUser.username === p_kend.p_kend_name.username) { %>
+                <a class="ui positive button" href="/print/kewpa15/<%= asset._id %>">Cetak Kew.PA-15</a>
+                <!--End check logged in user if its same as pegawai kenderaan-->
+                <% } %>
+                <!--End Loop pegawai kenderaan to get username of pegawai kenderaan-->
+                <% }) %>
+                <div class="ui tiny right floated pagination menu">
+                    <% if(maintainances.page == 1) { %>
+                    <a class="disabled item"><i class="angle double left icon"></i></a>
+                    <% } else { %>
+                    <a class="item" href="/index/assets/<%= asset._id %>?page=<%= maintainances.page - 1 %>"><i
+                            class="angle double left icon"></i></a>
+                    <% } %>
+
+                    <% var i = (maintainances.page > 5 ? maintainances.page - 4 : 1) %>
+                    <% if(i !== 1) { %>
+                    <a class="disabled item">...</a>
+                    <% } %>
+                    <% for(; i <= (maintainances.page + 4) && i <= maintainances.pages; i++) { %>
+                    <% if( i == maintainances.page ) { %>
+                    <a class="active item"><%= i %></a>
+                    <% } else { %>
+                    <a class="item" href="/index/assets/<%= asset._id %>?page=<%= i %>"><%= i %></a>
+                    <% } %>
+                    <% if( i == maintainances.page + 4 && i < maintainances.pages ) { %>
+                    <a class="disabled item">...</a>
+                    <% } %>
+                    <% } %>
+
+                    <% if(maintainances.page == maintainances.pages) { %>
+                    <a class="disabled item"><i class="angle double right icon"></i></a>
+                    <% } else { %>
+                    <a class="item" href="/index/assets/<%= asset._id %>?page=<%= maintainances.pages %>"><i
+                            class="angle double right icon"></i></a>
+                    <% } %>
+                </div>
+                <% } %>
+            </th>
+        </tr>
+    </tfoot>
+</table>
+<% }); %>
+<% } %>

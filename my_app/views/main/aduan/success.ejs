@@ -1,0 +1,33 @@
+<%- include('../../includes/header.ejs') %>
+
+</head>
+
+<style>
+    #segment {
+        margin-top: 5%;
+    }
+</style>
+
+<body>
+
+    <div class="ui two column centered grid">
+        <div class="column">
+            <div id="segment" class="ui placeholder center aligned segment">
+                <div class="ui icon header">
+                    <i class="green check circle icon"></i>
+                    ADUAN BERJAYA
+                </div>
+                <p><strong>Aduan anda telah berjaya dihantar melalui sistem dan email</strong></p>
+                <div class="inline">
+                    <a class="ui primary button" href="/aduan/<%= aduanId %>">Lihat Aduan</a>
+                    <a class="ui button" href="/aduan">Kembali</a>
+                </div>
+            </div>
+        </div>
+        <div class="four column centered row">
+            <div class="column"></div>
+            <div class="column"></div>
+        </div>
+    </div>
+
+    <%- include('../../includes/footer.ejs') %>

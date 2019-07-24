@@ -1,0 +1,577 @@
+<%- include('../../includes/header.ejs') %>
+
+<body>
+
+    <div id="contextWrap">
+        <!--left sidebar-->
+        <%- include('../sidebar/left/sidebar-left.ejs') %>
+        <!--left sidebar-->
+
+        <!--rightsidebar-->
+
+        <!--rightsidebar-->
+
+        <div class="pusher">
+            <!--navbar-->
+            <%- include('../navbar/top.ejs') %>
+            <!--navbar-->
+
+            <!--maincontent-->
+            <div class="mainWrap navslide">
+                <div class="ui equal width left aligned padded grid stackable">
+
+                    <div class="row">
+                        <div class="sixteen wide tablet twelve wide computer column">
+                            <div class="ui segment">
+                                <div class="ui breadcrumb">
+                                    <h3 class="section">ASET</h3>
+                                    <i class="right angle icon divider"></i>
+                                    <a class="section" href="/index">Laman Utama</a>
+                                    <div class="divider"> / </div>
+                                    <div class="active section">Senarai Aset Alih</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stretched row">
+
+                        <div class="sixteen wide tablet twelve wide computer column">
+                            <div class="ui segments">
+
+                                <div class="ui segment no-padding-bottom">
+                                    <div class="ui left floated header">
+                                        <h2 class="ui grey sub header">
+                                            JUMLAH
+                                        </h2>
+                                        <% if(allSum.length !== 0) { %>
+                                        <span>RM <%= formatNumber(allSum) %></span>
+                                        <% } else { %>
+                                        <span>RM 0.00</span>
+                                        <% } %>
+                                    </div>
+                                    <div class="ui right floated header">
+                                        <% p_asset.forEach(function(p_asset) { %>
+                                        <% if(currentUser.username === p_asset.p_aset_name.username) { %>
+                                        <a class="ui right floated primary button" href="/index/assets/new">
+                                            Daftar Aset
+                                        </a>
+                                        <% } else { %>
+                                        <div class="ui button"
+                                            data-tooltip="Hanya Pegawai Aset yang dibenarkan untuk mendaftar aset baharu."
+                                            data-position="top center">
+                                            Daftar Aset
+                                        </div>
+                                        <% } %>
+                                        <% }) %>
+
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="ui segment left aligned">
+
+                                    <!-- <div id="chart1" class="allSumGraph"></div> -->
+
+                                    <div class="ui horizontal segments">
+                                        <div class="ui segment center aligned">
+                                            <h2 class="ui sub header">
+                                                Jumlah Aset Alih
+                                            </h2>
+                                            <% if(sum_movable_assets.length !== 0) { %>
+                                            <% sum_movable_assets.forEach(function(movable) { %>
+                                            <span>RM <%= formatNumber(movable.total) %></span>
+                                            <% }); %>
+                                            <% } else { %>
+                                            <span>RM 0.00</span>
+                                            <% } %>
+                                        </div>
+                                        <div class="ui segment center aligned">
+                                            <h2 class="ui sub header">
+                                                Jumlah Selenggara
+                                            </h2>
+                                            <% if(sum_mtnc.length !== 0) { %>
+                                            <% sum_mtnc.forEach(function(sum_mtnc) { %>
+                                            <span>RM <%= formatNumber(sum_mtnc.total) %></span>
+                                            <% }); %>
+                                            <% } else { %>
+                                            <span>RM 0.00</span>
+                                            <% } %>
+                                        </div>
+                                        <div class="ui segment center aligned">
+                                            <h2 class="ui sub header">
+                                                Jumlah Pergerakan Inden
+                                            </h2>
+                                            <% if(sum_indens.length !== 0) { %>
+                                            <% sum_indens.forEach(function(indens) { %>
+                                            <span>RM <%= formatNumber(indens.total) %></span>
+                                            <% }); %>
+                                            <% } else { %>
+                                            <span>RM 0.00</span>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                    <br>
+
+                                    <!--CARTA JUMLAH SELENGGARA KENDERAAN-->
+                                    <h3 class="ui left floated header">
+                                        Jumlah Keseluruhan Selengara Bagi Setiap Kenderaan
+                                    </h3>
+                                    <div id="chart2" class="ct-chart"></div>
+                                    <!--CARTA JUMLAH SELENGGARA KENDERAAN-->
+
+                                    <div class="ui styled fluid accordion">
+                                        <!--JADUAL JUMLAH SELENGGARA KENDERAAN-->
+                                        <div class="title">
+                                            <i class="dropdown icon"></i>
+                                            Data Keseluruhan Selengara Bagi Setiap Kenderaan
+                                        </div>
+                                        <div class="content">
+                                            <table class="ui celled table">
+                                                <thead>
+                                                    <tr class="center aligned">
+                                                        <% maintainancesCount.forEach(function(count) { %>
+                                                        <th>Bil. Selenggara&ensp;<a
+                                                                class="ui yellow circular label"><%= count.allCount %></a>
+                                                        </th>
+                                                        <% }); %>
+                                                        <th>No. Pendaftaran</th>
+                                                        <th>Jumlah Selenggara</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% if(maintainancesTable.length !== 0) { %>
+                                                    <% maintainancesTable.forEach(function(mTbl) { %>
+                                                    <tr class="center aligned">
+                                                        <td data-label=""><a
+                                                                class="ui green circular label"><%= mTbl.mtncCount %>x</a>
+                                                        </td>
+                                                        <td data-label=""><%= mTbl._id %></td>
+                                                        <td data-label="">RM <%= formatNumber(mTbl.number) %></td>
+                                                    </tr>
+                                                    <% }); %>
+                                                    <% } else { %>
+                                                    <tr class="center aligned">
+                                                        <td colspan="5">Tiada rekod</td>
+                                                    </tr>
+                                                    <% } %>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!--JADUAL JUMLAH SELENGGARA KENDERAAN-->
+
+                                        <!--JADUAL JUMLAH REKOD INDEN KENDERAAN-->
+                                        <div class="title">
+                                          <i class="dropdown icon"></i>
+                                          Data Keseluruhan Rekod Pergerakan Inden Bagi Setiap Kenderaan
+                                        </div>
+                                        <div class="content">
+                                            <table class="ui celled table">
+                                                <thead>
+                                                    <tr class="center aligned">
+                                                        <th rowspan="2">No. Pendaftaran</th>
+                                                        <th colspan="2">Jumlah Penggunaan Minyak</th>
+                                                    </tr>
+                                                    <tr class="center aligned">
+                                                        <th>Liter</th>
+                                                        <th>RM</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% if(indensTable.length !== 0) { %>
+                                                    <% indensTable.forEach(function(indenTbl) { %>
+                                                    <tr class="center aligned">
+                                                        <td data-label=""><%= indenTbl._id %></td>
+                                                        <td data-label=""><%= indenTbl.sumLiter %></td>
+                                                        <td data-label="">RM <%= formatNumber(indenTbl.sumRM) %></td>
+                                                    </tr>
+                                                    <% }); %>
+                                                    <% } else { %>
+                                                    <tr class="center aligned">
+                                                        <td colspan="3">Tiada rekod</td>
+                                                    </tr>
+                                                    <% } %>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!--JADUAL JUMLAH REKOD INDEN KENDERAAN-->
+                                      </div>
+
+                                    <h3 class="ui dividing header">
+                                        Pegawai Pengawal
+                                    </h3>
+                                    <div class="ui four doubling centered cards">
+                                        <% if(p_asset.length !== 0) { %>
+                                        <% p_asset.forEach(function(p_asset) { %>
+                                        <div class="ui card">
+                                            <div class="content">
+                                                <div class="center aligned header">Pegawai Aset</div>
+                                                <div class="center aligned description">
+                                                    <p><%= p_asset.p_aset_name.emp_name %><br><%= p_asset.p_aset_name.position %>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="extra content">
+                                                <div class="center aligned author">
+                                                    <img class="ui avatar image"
+                                                        src="/profile-saya/<%= p_asset.p_aset_name._id %>/avatar">
+                                                    <%= p_asset.p_aset_name.username %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% }); %>
+                                        <% } else { %>
+                                        <p>Tiada Rekod</p>
+                                        <% } %>
+
+                                        <% if(p_kend.length !== 0) { %>
+                                        <% p_kend.forEach(function(p_kend) { %>
+                                        <div class="ui card">
+                                            <div class="content">
+                                                <div class="center aligned header">Pegawai Kenderaan</div>
+                                                <div class="center aligned description">
+                                                    <p><%= p_kend.p_kend_name.emp_name %><br><%= p_kend.p_kend_name.position %>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="extra content">
+                                                <div class="center aligned author">
+                                                    <img class="ui avatar image"
+                                                        src="/profile-saya/<%= p_kend.p_kend_name._id %>/avatar">
+                                                    <%= p_kend.p_kend_name.username %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% }); %>
+                                        <% } else { %>
+                                        <p>Tiada rekod</p>
+                                        <% } %>
+
+                                    </div>
+                                    <div class="ui hidden divider"></div>
+                                    <div class="ui divider"></div>
+                                    <div class="ui hidden divider"></div>
+
+                                    <div class="ui left floated header">
+                                        <h3 class="ui header">
+                                            Senarai Daftar Harta Modal
+                                            <div class="sub header">Tambah dan semak Daftar Harta Modal Majlis Daerah
+                                                Lenggong. Cari <% if(search) { %>: <%= itemCounts %><% } %> aset
+                                                <% if(!search) { %><i class="icon help"></i><% } %>
+                                                <% if(search) { %>di temui<% } %>
+                                            </div>
+                                        </h3>
+                                    </div>
+                                    <div class="ui right floated header">
+                                        <form action="/index/assets" method="GET">
+                                            <div class="ui fluid category search">
+                                                <div class="ui icon input">
+                                                    <input class="prompt" type="text" name="search"
+                                                        placeholder="Membuat carian...">
+                                                    <% if(!search) { %>
+                                                    <i class="search icon"></i>
+                                                    <% } else { %>
+                                                    <i class="angle double left icon"></i>
+                                                    <% } %>
+                                                </div>
+                                                <div class="results"></div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="clearfix"></div>
+
+                                    <% if(assets.length !== 0) { %>
+                                    <table id="data_table"
+                                        class="ui compact selectable striped celled table tablet stackable"
+                                        cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>No. Siri Pendaftaran</th>
+                                                <th>Kategori</th>
+                                                <th>No. Pendaftaran</th>
+                                                <th>Jenis</th>
+                                                <th>Tarikh</th>
+                                                <th>Papar</th>
+                                                <th>Kemaskini</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <% assets.forEach(function(asset) { %>
+                                            <tr>
+                                                <td><%= asset.file_ast %></td>
+                                                <td><%= asset.cat %></td>
+                                                <td><%= asset.ast_reg %></td>
+                                                <td><%= asset.ast_type %></td>
+                                                <td><%= asset.createdAt.toLocaleDateString() %></td>
+                                                <td>
+                                                    <a href="/index/assets/<%= asset._id %>">
+                                                        <label class="ui tiny basic blue label">Lihat aset</label>
+                                                    </a>
+                                                </td>
+                                                <% if(currentUser && currentUser.isAdmin) { %>
+                                                <td>
+                                                    <a href="/index/assets/<%= asset._id %>/edit">
+                                                        <label class="ui tiny basic green label">Kemaskini Aset</label>
+                                                    </a>
+                                                </td>
+                                                <% } else { %>
+                                                <td class="disabled">
+                                                    <label class="ui tiny basic grey label">Kemaskini Aset</label>
+                                                </td>
+                                                <% } %>
+                                            </tr>
+                                            <% }); %>
+                                        </tbody>
+                                    </table>
+                                    <div class="ui left floated header">
+                                        <div class="ui sub header">Showing <%= current %> to <%= pages %> of
+                                            <%= itemCounts %> entries
+                                        </div>
+                                    </div>
+                                    <div class="ui right floated header">
+                                        <% if(pages && pages > 0) { %>
+                                        <div class="ui tiny pagination menu">
+
+                                            <% if(current == 1) { %>
+                                            <a class="disabled item"><i class="angle double left icon"></i></a>
+                                            <% } else { %>
+                                            <a class="item"
+                                                href="/index/assets <% if(search) { %>?search=<%= search %><% } %>"><i
+                                                    class="angle double left icon"></i></a>
+                                            <% } %>
+
+                                            <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                                            <% if(i !== 1) { %>
+                                            <a class="disabled item">...</a>
+                                            <% } %>
+                                            <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                                            <% if( i == current ) { %>
+                                            <a class="active item"><%= i %></a>
+                                            <% } else { %>
+                                            <a class="item"
+                                                href="/index/assets?page=<%= i %><%if (search) { %>&search=<%= search %><% } %>"><%= i %></a>
+                                            <% } %>
+                                            <% if( i == Number(current) + 4 && i < pages) { %>
+                                            <a class="disabled item">...</a>
+                                            <% } %>
+                                            <% } %>
+
+                                            <% if(current == pages) { %>
+                                            <a class="disabled item"><i class="angle double right icon"></i></a>
+                                            <% } else { %>
+                                            <a class="item"
+                                                href="/index/assets?page=<%= pages %><% if(search) { %>&search=<%= search %><% } %>"><i
+                                                    class="angle double right icon"></i></a>
+                                            <% } %>
+
+                                        </div>
+                                        <% } %>
+                                        <!-- end of pagination -->
+                                    </div>
+                                    <div class="ui inverted dimmer">
+                                        <div class="ui text loader">Loading</div>
+                                    </div>
+                                    <br><br>
+                                    <% } else { %>
+                                    <table id="data_table"
+                                        class="ui compact selectable striped celled table tablet stackable"
+                                        cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>No. Siri Pendaftaran</th>
+                                                <th>Kategori</th>
+                                                <th>No. Pendaftaran</th>
+                                                <th>Jenis</th>
+                                                <th>Papar</th>
+                                                <th>Kemaskini</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="center aligned">
+                                                <td colspan="6">Tiada Rekod</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="sixteen wide tablet four wide computer column">
+
+                            <div class="ui segment">
+                                <h3 class="ui dividing header">
+                                    Pegawai Verifikasi
+                                </h3>
+                                <div class="ui middle aligned divided list">
+                                    <div class="item">
+                                        <div class="right floated content">
+                                            <div class="ui button">Peranan</div>
+                                        </div>
+                                        <img class="ui avatar image" src="/img/avatar/tom.jpg">
+                                        <div class="content">
+                                            <%= currentUser.emp_name %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+
+                    <!--navbar bottom-->
+                    <!-- <%- include('../navbar/bottom.ejs') %> -->
+                    <!--navbar bottom-->
+                </div>
+                <!--maincontent-->
+            </div>
+        </div>
+    </div>
+
+    <%- include('../../includes/footer.ejs') %></h1>
+
+    <!-- chartist js development -->
+    <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js" type="text/javascript"></script>
+    <!-- <script src="/js/assets_js/all.js" type="text/javascript"></script> -->
+    <!-- chartist js development -->
+    <script>
+
+        window.addEventListener('load', setup);
+
+        async function setup() {
+            const result = await getData();
+            const result2 = await getIndensTbl();
+
+            new Chartist.Line('.ct-chart', {
+                labels: result.plateNumber, //['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+                series: 
+                [
+                    result.sumMtnc,
+                    result2.rm
+                ]
+                }, 
+                {
+                    fullWidth: true,
+                    chartPadding: {
+                        right: 40
+                    },
+                    axisY: {
+                        offset: 80,
+                        labelInterpolationFnc: function (value) {
+                            return 'RM ' + value 
+                        },
+                        scaleMinSpace: 15
+                    }
+                }
+            );
+            
+            /*
+            new Chartist.Bar('.ct-chart', {
+                labels: result.plateNumber,
+                series: result.sumMtnc
+            },
+                {
+                    distributeSeries: true,
+                    axisY: {
+                        offset: 80,
+                        labelInterpolationFnc: function (value) {
+                            return 'RM ' + value 
+                        },
+                        scaleMinSpace: 15
+                    }
+                });
+            */
+        }
+        // getData();
+        async function getData() {
+            const data = await <%- JSON.stringify(maintainancesStat) %>
+
+            const plateNumber = []
+            const sumMtnc = []
+
+            data.forEach(row => {
+                // console.log(row);
+                plateNumber.push(row._id)
+                sumMtnc.push(row.number)
+            });
+            return { plateNumber, sumMtnc };
+        }
+
+        getIndensTbl();
+        async function getIndensTbl() {
+            const data = await <%- JSON.stringify(indensTable) %>
+
+            const liter = []
+            const rm = []
+
+            data.forEach(row => {
+                liter.push(row.sumLiter)
+                rm.push(row.sumRM)
+            });
+            return { liter, rm };
+        }
+    </script>
+
+    <script>
+        /*  
+            sum_ori_acq,
+            sum_immovable_aset,
+            sum_movable_assets,
+            sum_mtnc,
+        
+        window.addEventListener('load', allSumGraph);
+
+        async function allSumGraph() {
+            const result2 = await getAllSums2();
+            const result3 = await getAllSums3();
+
+            var data = {
+                labels: ['Bananas', 'Apples', 'Grapes'],
+                series: [result2.total2, result3.total3]
+            };
+
+            var options = {
+                labelInterpolationFnc: function (value) {
+                    return value[0]
+                }
+            };
+
+            var responsiveOptions = [
+                ['screen and (min-width: 640px)', {
+                    chartPadding: 30,
+                    labelOffset: 100,
+                    labelDirection: 'explode',
+                    labelInterpolationFnc: function (value) {
+                        return value;
+                    }
+                }],
+                ['screen and (min-width: 1024px)', {
+                    labelOffset: 80,
+                    chartPadding: 20
+                }]
+            ];
+
+            new Chartist.Pie('.allSumGraph', data, options, responsiveOptions);
+        }
+
+        async function getAllSums2() {
+            const data2 = await <%- JSON.stringify(sum_movable_assets) %>;
+            const id2 = [];
+            const total2 = [];
+
+            data2.forEach(row => {
+                total2.push(row.total);
+            });
+            return { id2, total2 };
+        }
+
+        async function getAllSums3() {
+            const data3 = await <%- JSON.stringify(sum_mtnc) %>;
+            const id3 = [];
+            const total3 = [];
+
+            data3.forEach(row => {
+                total3.push(row.total);
+            });
+            return { id3, total3 };
+        }
+        */
+    </script>

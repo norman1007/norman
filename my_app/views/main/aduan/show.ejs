@@ -1,0 +1,211 @@
+<%- include('../../includes/header.ejs') %>
+
+</head>
+
+<body>
+
+    <div id="contextWrap">
+        <!--left sidebar-->
+        <%- include('../sidebar/left/sidebar-left.ejs') %>
+        <!--left sidebar-->
+
+        <!--rightsidebar-->
+
+        <!--rightsidebar-->
+
+        <div class="pusher">
+            <!--navbar-->
+            <%- include('../navbar/top.ejs') %>
+            <!--navbar-->
+
+            <!--maincontent-->
+            <div class="mainWrap navslide">
+                <div class="ui equal width left aligned padded grid stackable">
+                    <!-- ui equal width left aligned padded grid stackable -->
+
+                    <div class="row">
+                        <div class="sixteen wide tablet thirteen wide computer column">
+                            <div class="ui segment">
+                                <div class="ui breadcrumb">
+                                    <h3 class="section">ADUAN</h3>
+                                    <i class="right angle icon divider"></i>
+                                    <a class="section" href="/index">Laman Utama</a>
+                                    <div class="divider"> / </div>
+                                    <a class="section" href="/aduan">Senarai Aduan</a>
+                                    <div class="divider"> / </div>
+                                    <div class="section"><%= complaint.issue %></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stretched row">
+                        <div class="sixteen wide tablet thirteen wide computer column">
+                            <div class="ui segments">
+                                <div class="ui segment no-padding-bottom">
+                                    <h5 class="ui left floated header">
+                                        Lihat Aduan
+                                    </h5>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="ui segment left aligned">
+
+                                    <div class="ui top attached segment">
+                                        <img class="ui centered fluid huge rounded image" src="<%= complaint.attach %>">
+                                    </div>
+                                    <div class="ui attached segment">
+                                        <div style="display: inline-block;">
+                                            <h3 class="ui header"><%= complaint.issue %></h3>
+                                        </div>
+                                        <div style="display: inline-block; padding-left: 5px;">
+                                            <p><%= complaint.createdAt.toLocaleString(); %></p>
+                                        </div>
+                                        <div
+                                            style="display: inline-block; padding-left: 5px; float: right; margin-right: 0; margin-left: .25em;">
+                                            <% if(complaint.status !== true) { %>
+                                            <!-- <p class="text-info">Sedang diproses</p> -->
+                                            <a class="ui blue right ribbon label">Sedang diproses</a>
+                                            <% } %>
+                                            <% if(complaint.status !== false) { %>
+                                            <a class="ui green right ribbon label">Ditutup</a>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                    <div class="ui attached segment">
+                                        <a class="ui blue label"><%= complaint.modul %></a>
+                                        <% if(complaint.priority === 'tinggi') { %>
+                                        <a class="ui red label">Klasifikasi isu - <%= complaint.priority %></a>
+                                        <% } %>
+                                        <% if(complaint.priority === 'sederhana') { %>
+                                        <a class="ui yellow label">Klasifikasi isu - <%= complaint.priority %></a>
+                                        </td>
+                                        <% } %>
+                                        <% if(complaint.priority === 'rendah') { %>
+                                        <a class="ui basic label">Klasifikasi isu - <%= complaint.priority %></a>
+                                        <% } %>
+                                        <p><%- complaint.desc %></p>
+                                        <cite><strong>Aduan oleh: <%= complaint.userId.department %></strong></cite>
+                                    </div>
+                                    <% if(complaint.status !== true && currentUser || currentUser.isAdmin) { %>
+                                    <div class="ui bottom attached clearing segment">
+                                        <a class="ui right floated animated fade button" tabindex="0" href="/aduan/<%= complaint._id %>/edit">
+                                            <div class="visible content">Tukar Status</div>
+                                            <div class="hidden content">
+                                                Tutup
+                                            </div>
+                                        </a>
+                                        <p>Aduan telah selesai? </p>
+                                    </div>
+                                    <% } %>
+                                    <div class="ui hidden divider"></div>
+                                    <div class="ui styled fluid accordion">
+                                        <div class="active title">
+                                            <i class="dropdown icon"></i>
+                                            Ulasan
+                                        </div>
+                                        <div class="active content">
+                                            <% if(currentUser && currentUser.isAdmin) { %>
+                                            <form class="ui form" action="/aduan/<%= complaint._id %>/reviews"
+                                                method="POST">
+                                                <div class="inline fields">
+                                                    <label for="review">Ulasan Anda : </label>
+                                                    <div class="twelve wide field">
+                                                        <input type="text" id="review" name="complaints[reviews]"
+                                                            placeholder="ulas sesuatu">
+                                                    </div>
+                                                    <div class="field">
+                                                        <a class="ui basic grey button" href="">Batal</a>
+                                                    </div>
+                                                    <div class="field">
+                                                        <button class="ui basic green button">Hantar</button>
+                                                    </div>
+                                                </div>
+                                                <div class="ui divider"></div>
+                                            </form>
+                                            <% } %>
+                                            <% if(complaint.reviews.length !== 0) { %>
+                                            <div class="ui label">
+                                                <i class="mail icon"></i> No. Rujukan <%= complaint._id %>
+                                            </div>
+                                            <div class="ui segments">
+                                                <% complaint.reviews.forEach(function(r) { %>
+                                                <div class="ui segment">
+                                                    <div class="ui very relaxed list">
+                                                        <div class="item">
+                                                            <img class="ui avatar image"
+                                                                src="/profile-saya/<%= r.userId._id %>/avatar %>">
+                                                            <div class="content">
+                                                                <p class="header"><%= r.userId.emp_name.toLowerCase() %>
+                                                                </p>
+                                                                <div class="description">
+                                                                    <strong><%= r.reviews %></strong>
+                                                                    <small><%= moment(r.createdAt).fromNow() %></small>.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <% }); %>
+
+                                                <div style="margin: 10px;" class="ui pagination menu">
+                                                    <% if(paginate.pages && paginate.pages > 0) { %>
+                                                    <div class="ui tiny right floated pagination menu">
+                                                        <% if(paginate.page == 1) { %>
+                                                        <a class="disabled item"><i
+                                                                class="angle double left icon"></i></a>
+                                                        <% } else { %>
+                                                        <a class="item"
+                                                            href="/aduan/<%= complaint._id %>?page=<%= paginate.page - 1 %>"><i
+                                                                class="angle double left icon"></i></a>
+                                                        <% } %>
+
+                                                        <% var i = (paginate.page > 5 ? paginate.page - 4 : 1) %>
+                                                        <% if(i !== 1) { %>
+                                                        <a class="disabled item">...</a>
+                                                        <% } %>
+                                                        <% for(; i <= (paginate.page + 4) && i <= paginate.pages; i++) { %>
+                                                        <% if( i == paginate.page ) { %>
+                                                        <a class="active item"><%= i %></a>
+                                                        <% } else { %>
+                                                        <a class="item"
+                                                            href="/aduan/<%= complaint._id %>?page=<%= i %>"><%= i %></a>
+                                                        <% } %>
+                                                        <% if( i == paginate.page + 4 && i < paginate.pages ) { %>
+                                                        <a class="disabled item">...</a>
+                                                        <% } %>
+                                                        <% } %>
+
+                                                        <% if(paginate.page == paginate.pages) { %>
+                                                        <a class="disabled item"><i
+                                                                class="angle double right icon"></i></a>
+                                                        <% } else { %>
+                                                        <a class="item"
+                                                            href="/aduan/<%= complaint._id %>?page=<%= paginate.pages %>"><i
+                                                                class="angle double right icon"></i></a>
+                                                        <% } %>
+                                                    </div>
+                                                    <% } %>
+                                                </div>
+
+                                            </div>
+                                            <% } else { %>
+                                            <p class="center aligned">Tiada ulasan lagi.</p>
+                                            <% } %>
+                                        </div>
+                                    </div>
+
+                                    <div class="ui inverted dimmer">
+                                        <div class="ui text loader">Loading</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--maincontent-->
+            </div>
+        </div>
+    </div>
+
+    <%- include('../../includes/footer.ejs') %>

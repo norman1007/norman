@@ -1,0 +1,439 @@
+<%- include('../../includes/header.ejs') %>
+
+</head>
+
+<body>
+
+    <div id="contextWrap">
+        <!--left sidebar-->
+        <%- include('../sidebar/left/sidebar-left-asset.ejs') %>
+        <!--left sidebar-->
+
+        <!--rightsidebar-->
+
+        <!--rightsidebar-->
+
+        <div class="pusher">
+            <!--navbar-->
+            <%- include('../navbar/top.ejs') %>
+            <!--navbar-->
+
+            <!--maincontent-->
+            <div class="mainWrap navslide">
+                <div class="ui equal width left aligned padded grid stackable">
+                    <!-- ui equal width left aligned padded grid stackable -->
+
+                    <!--Breadcrumb-->
+                    <div class="row">
+                        <div class="sixteen wide tablet sixteen wide computer column">
+                            <div class="ui segment">
+                                <div class="ui breadcrumb">
+                                    <h3 class="section">DAFTAR HARTA MODAL</h3>
+                                    <i class="right angle icon divider"></i>
+                                    <a class="section" href="/index">Laman Utama</a>
+                                    <div class="divider"> / </div>
+                                    <a class="section" href="/index/assets">Senarai Aset</a>
+                                    <div class="divider"> / </div>
+                                    <div class="active section">KEW. PA-3</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Breadcrumb-->
+
+                    <div class="row">
+                        <div class="sixteen wide tablet twelve wide computer column">
+                            <div class="ui segments">
+                                <div class="ui segment">
+
+                                    <!-- tab navbar -->
+                                    <div class="ui tabular menu">
+
+                                        <% if(errorMsg) { %>
+                                        <div class="ui negative message">
+                                            <i class="close icon"></i>
+                                            <div class="header">
+                                                <p><%= errorMsg %> !</p>
+                                            </div>
+                                        </div>
+                                        <% } %>
+                                        <% if(success && success.length > 0) { %>
+                                        <div class="ui positive message">
+                                            <i class="close icon"></i>
+                                            <div class="center aligned">
+                                                <strong><%= success %></strong>
+                                            </div>
+                                        </div>
+                                        <% } %>
+
+                                        <div class="active item" data-tab="tab-name">Bahagian A - Daftar Harta Modal
+                                        </div>
+                                        <div class="item" data-tab="tab-name2">Penempatan Pegawai</div>
+                                        <div class="item" data-tab="tab-name3">Bahagian B - Selenggara</div>
+                                        <div class="item" data-tab="tab-name4">Rekod Inden</div>
+                                    </div>
+
+                                    <!-- tab content -->
+                                    <div class="active ui tab" data-tab="tab-name">
+                                        <div class="ui hidden divider"></div>
+                                        <%- include('./tab/daftar-harta-modal.ejs') %>
+                                    </div>
+
+                                    <div class="ui tab" data-tab="tab-name2">
+                                        <div class="ui hidden divider"></div>
+                                        <%- include('./tab/placements-tab.ejs') %>
+                                    </div>
+
+                                    <div class="ui tab" data-tab="tab-name3">
+                                        <!-- Tab Content !-->
+                                        <div class="ui hidden divider"></div>
+                                        <%- include('./tab/maintainances-tab.ejs') %>
+                                    </div>
+
+                                    <div class="ui tab" data-tab="tab-name4">
+                                        <div class="ui hidden divider"></div>
+                                        <%- include('./tab/rekod-inden.ejs') %>
+                                    </div>
+
+                                    <div class="ui inverted dimmer">
+                                        <div class="ui text loader">Loading</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="sixteen wide tablet four wide computer column">
+                            <div class="ui segment">
+                                <div class="ui comments scrollable">
+                                    <h4 class="ui center aligned header">Diskusi</h4>
+                                    <div class="ui divider"></div>
+                                    <div class="ui hidden divider"></div>
+                                    <div id="ul" class="chat_area scroll-list">
+
+                                        <div id="messages" class="comment li">
+                                            <% grpCht.discussions.forEach(function(cht) { %>
+                                            <a class="avatar">
+                                                <img src="/profile-saya/<%= cht.sender._id %>/avatar">
+                                            </a>
+                                            <div class="content">
+                                                <a class="author"><%= limitUserChatName(cht.sender.emp_name) %></a>
+                                                <div class="metadata">
+                                                    <div class="date"><%= moment(cht.createdAt).fromNow() %></div>
+                                                </div>
+                                                <div class="text">
+                                                    <%= cht.body %>
+                                                </div>
+                                                <% if(currentUser && cht.sender._id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                                                <div class="actions">
+                                                    <form style="margin:0" class="delete"
+                                                        action="/index/assets/<%= asset._id %>/discussions/<%= cht._id %>?_method=DELETE"
+                                                        method="POST">
+                                                        <button class="reply active" type="submit"
+                                                            style="background-color: transparent; background-repeat: no-repeat; border: none; cursor: pointer; overflow: hidden;">
+                                                            Padam
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                                <% } %>
+                                            </div>
+                                            <br>
+                                            <% }); %>
+                                            <script id="message-template" type="text/template">
+                                                <a class="avatar">
+                                                    <img src="/profile-saya/{{ senderPhoto }}/avatar">
+                                                </a>
+                                                <div class="content">
+                                                    <a class="author">{{ sender }}</a>
+                                                    <div class="metadata">
+                                                        <div class="date">{{ dateChat }}</div>
+                                                    </div>
+                                                    <div class="text">
+                                                        {{ text }}
+                                                    </div>
+                                                    <!--kena klik 2x utk padam.. bkn bug tp sebab tak provide discussion._id pd padam href-->
+                                                    <div class="actions">
+                                                        <a href="{{ room }}" class="reply active">Muat semula untuk memadam</a>
+                                                    </div> 
+                                                    <br>
+                                                </div>
+                                            </script>
+                                        </div>
+                                        <!--id=messages-->
+
+                                        <form id="message-form" class="ui reply form" method="POST">
+                                            <div class="field">
+                                                <input type="hidden" name="discussions[groupId]" id="groupId"
+                                                    value="<%= asset._id %>">
+                                                <input type="hidden" name="discussions[currentUserId]"
+                                                    id="currentUserId" value="<%= userChats._id %>">
+                                                <input type="hidden" name="discussions[sender]" id="sender"
+                                                    value="<%= userChats.emp_name %>" />
+
+                                                <!-- <input id="msg" name="discussions[message]" class="inputSend"
+                                                    type="text" placeholder="Taip disini" autocomplete="off" autofocus> -->
+
+                                                <div class="ui fluid icon input">
+                                                    <input id="msg" name="discussions[message]" class="inputSend"
+                                                        type="text" placeholder="Taip sesuatu..." autocomplete="off"
+                                                        autofocus>
+                                                    <!--onkeyup="nospaces(this)"-->
+                                                    <i class="pencil icon"></i>
+                                                </div>
+                                            </div>
+                                            <button style="display: none;" id="send-message"
+                                                class="ui primary submit labeled icon button">
+                                                <i class="icon edit"></i> Bincang
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <!--chat area-->
+                                </div>
+                            </div>
+                        </div>
+
+                        <style>
+                            #ul,
+                            .li {
+
+                                padding: 0;
+                                margin: 0;
+
+                            }
+
+                            #ul {
+                                height: 400px;
+                                overflow: auto;
+                                padding-right: 10px;
+                            }
+                        </style>
+
+                    </div>
+                </div>
+                <!-- DARRELL AGGREGATION TESTING-->
+                <% if(sortedAssets && sortedAssets.length) { %>
+                    <div class="">
+                        <table>
+                            <tr>
+                                <th>Total maint's</th>
+                                <th>Total</th>
+                            </tr>
+                            
+                            
+                                <tr>
+                                    <td><%= sortedAssets.length %></td>
+                                    <td><%= adjustedTotalAmt %></td>
+                                </tr>
+                            
+                            
+                        </table>
+                       
+                    </div>
+                <% } else if(allMaint && allMaint.length) { %>
+                    <div class="">
+                        <table>
+                            <tr>
+                                <th>Total maint's for month</th>
+                                <th>Month</th>
+                                <th>Year</th>
+                                <th>Total</th>
+                                <th>Titles</th>
+                            </tr>
+                            
+                            <% allMaint.forEach((maint) => { %>
+                                <tr>
+                                    <td><%= maint.count %></td>
+                                    <td><%= maint._id.month %></td>
+                                    <td><%= maint._id.year %></td>
+                                    <td><%= maint.total %></td>
+                                    <td>
+                                        <hr>
+                                        <% maint.titles.forEach((titleList) => { %>
+                                            <%= titleList.title %>
+                                        <% }) %>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </table>
+                    </div>
+                <% } else { %>
+                    No records found for selected query
+                <% } %>
+                <!-- END AGGREGATION TESTING -->
+                <!--maincontent-->
+            </div>
+        </div>
+    </div>
+
+  
+
+    <%- include('../../includes/footer.ejs') %>
+
+    <script src="/socket.io/socket.io.js" type="text/javascript"></script>
+    <script src="/js/groupchat.js" type="text/javascript"></script>
+    <script src="/js/mustache.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        // Calander JQuery
+        // DISABLE FUTURE DATES
+        $(document).ready(function () {
+            $("#from").datepicker(
+
+                {
+                    maxDate: '0',
+                    beforeShow: function () {
+                        jQuery(this).datepicker({ maxDate: 0 });
+                    },
+                    altFormat: "dd/mm/yy",
+                    dateFormat: 'dd/mm/yy'
+
+                }
+
+            );
+
+            $("#to").datepicker(
+
+                {
+                    maxDate: '0',
+                    beforeShow: function () {
+                        jQuery(this).datepicker('option', 'minDate', jQuery('#from').val());
+                    },
+                    altFormat: "dd/mm/yy",
+                    dateFormat: 'dd/mm/yy'
+
+                }
+
+            );
+
+            /*
+            $("#from, #to").datepicker({
+                beforeShowDay: function(date)
+                {
+                    var day = date.getDay();
+                    if(day == 0 || day == 6) {
+                        return [false];
+                    } else {
+                        return [true];
+                    }
+                }
+            });
+            */
+        });
+        /*
+        DISABLE BEFORE DATES
+        var dateToday = new Date();
+        var dates = $("#from, #to").datepicker({
+            defaultDate: "+1w",
+            changeMonth: true,
+            numberOfMonths: 1,
+            minDate: dateToday,
+            onSelect: function (selectedDate) {
+                var option = this.id == "from" ? "minDate" : "maxDate",
+                    instance = $(this).data("datepicker"),
+                    date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
+                dates.not(this).datepicker("option", option, date);
+            }
+        });
+        */
+
+        // Validate Indens Fields
+        function validateIndens() {
+            var from, driver, to, returnCardReceiver, liter, amountFilled, receiptNumber;
+
+            from = document.getElementById("from").value;
+            driver = document.getElementById("driver").value;
+            to = document.getElementById("to").value;
+            returnCardReceiver = document.getElementById("returnCardReceiver").value;
+            liter = document.getElementById("liter").value;
+            amountFilled = document.getElementById("amountFilled").value;
+            receiptNumber = document.getElementById("receiptNumber").value;
+            if (from == "") {
+                alert("Sila isi tarikh kad diambil.");
+                return false;
+            } else if (driver == "" || driver == null || driver == "undefined") {
+                alert("Sila isi nama pemandu.");
+                return false;
+            } else if (to == "") {
+                alert("Sila isi tarikh kad dikembalikan.");
+                return false;
+            } else if (returnCardReceiver == "") {
+                alert("Sila isi nama penerima kad yang dikembalikan.");
+                return false;
+            } else if (liter == "") {
+                alert("Sila isi jumlah penggunaan minyak dalam liter.");
+                return false;
+            } else if (amountFilled == "") {
+                alert("Sila isi jumlah penggunaan minyak.");
+                return false;
+            } else if (receiptNumber == "") {
+                alert("Sila isi no. resit.");
+                return false;
+            }
+        };
+
+        // Function Check Empty
+        function checkEmpty(field) {
+            if (field == "" ||
+                field == null ||
+                field == "undefined") {
+
+                return false;
+            }
+            else if (/^\s*$/.test(field)) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+        document.getElementById("message-form").onsubmit = function () {
+
+            if (!(checkEmpty(document.getElementById("msg").value))) {
+                alert("Fill the field!");
+                return false; //stop the submit
+            }
+
+        };
+
+        // Function for not submit empty input field
+        /*
+        function nospaces(t) {
+
+            if ( t.value.match(/\s/g) ) {
+
+                alert('Sorry, you are not allowed to enter any spaces');
+
+                t.value = t.value.replace(/\s/g, '');
+
+            }
+
+        }
+        */
+
+        // Function confirm using sweet alert
+        /*
+        function deleteFunction(event) {
+            event.preventDefault(); // prevent form submit
+            var form = event.target.form; // storing the form
+            swal({
+                title: "Padam rekod inden",
+                text: "Adakah anda pasti?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Teruskan",
+                cancelButtonText: "Batal",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    form.submit();          // submitting the form when user press yes
+                } else {
+                    swal("Rekod inden", "Proses batal.", "error");
+                }
+            });
+        }
+        */
+    </script>

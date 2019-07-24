@@ -1,0 +1,343 @@
+<%- include('../../includes/header.ejs') %>
+
+<div id="contextWrap">
+    <!--sidebar-->
+    <%- include('../sidebar/left/sidebar-left.ejs') %>
+    <!--sidebar-->
+
+    <!--rightsidebar-->
+
+    <!--rightsidebar-->
+
+    <div class="pusher">
+        <!--navbar-->
+        <%- include('../navbar/top.ejs') %>
+        <!--navbar-->
+
+        <!--maincontent-->
+        <div class="mainWrap navslide">
+            <div class="ui equal width left aligned padded grid stackable">
+                <!-- ui equal width left aligned padded grid stackable -->
+
+                <div class="row">
+                    <div class="sixteen wide tablet thirteen wide computer column">
+                        <div class="ui segment">
+                            <div class="ui breadcrumb">
+                                <h3 class="section">BORANG HARTA MODAL</h3>
+                                <i class="right angle icon divider"></i>
+                                <a class="section" href="/index">Laman Utama</a>
+                                <div class="divider"> / </div>
+                                <a class="section" href="/index/assets">Aset</a>
+                                <div class="divider"> / </div>
+                                <div class="active section">KEW. PA-3</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="sixteen wide tablet thirteen wide computer column">
+                        <div class="ui segments">
+                            <div class="ui segment no-padding-bottom">
+                                <h5 class="ui left floated header">
+                                    DAFTAR ASET
+                                </h5>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="ui segment left aligned">
+
+                                <% if(errorMsg) { %>
+                                <div class="ui negative message">
+                                    <i class="close icon"></i>
+                                    <div class="header">
+                                        <p><%= errorMsg %> !</p>
+                                    </div>
+                                </div>
+                                <% } %>
+                                <% if(success && success.length > 0) { %>
+                                <div class="ui positive message">
+                                    <i class="close icon"></i>
+                                    <div class="center aligned">
+                                        <strong><%= success %></strong>
+                                    </div>
+                                </div>
+                                <% } %>
+
+                                <form class="ui form" action="/index/assets/new" method="POST">
+                                    <table class="ui celled structured table">
+                                        <thead class="full-width">
+                                            <tr class="center aligned">
+                                                <th colspan="4">BAHAGIAN A</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="collapsing" colspan="2">
+                                                    <div class="required field">
+                                                        <label>No. Siri Pendaftaran</label>
+                                                    </div>
+                                                </td>
+                                                <td colspan="2">
+                                                    <input type="text"
+                                                        class="<%= boxColorValidate.find(e => e.param === 'file_ast') ? 'invalid' : '' %>"
+                                                        name="file_ast" value="<%= oldInput.file_ast %>"
+                                                        autocomplete="off" autofocus />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="collapsing" colspan="2">
+                                                    Kod Nasional
+                                                </td>
+                                                <td colspan="2">
+                                                    <input type="text" name="nas_code" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="collapsing" colspan="2">
+                                                    <div class="required field">
+                                                        <label>Keterangan Aset</label>
+                                                    </div>
+                                                </td>
+                                                <td colspan="2">
+                                                    <input type="text"
+                                                        class="<%= boxColorValidate.find(e => e.param === 'ast_desc') ? 'invalid' : '' %>"
+                                                        name="ast_desc" value="<%= oldInput.ast_desc %>"
+                                                        autocomplete="off" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="collapsing" colspan="2">
+                                                    Kategori
+                                                </td>
+                                                <td colspan="2">
+                                                    <input type="text" name="cat" autocomplete="off" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="collapsing" colspan="2">
+                                                    Sub Kategori
+                                                </td>
+                                                <td colspan="2">
+                                                    <input type="text" name="sub_cat" autocomplete="off" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="collapsing" colspan="2">
+                                                    Jenis/ Jenama/ Model
+                                                </td>
+                                                <td colspan="2">
+                                                    <input type="text"
+                                                        class="<%= boxColorValidate.find(e => e.param === 'ast_type') ? 'invalid' : '' %>"
+                                                        name="ast_type" value="<%= oldInput.ast_type %>"
+                                                        autocomplete="off" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="collapsing">
+                                                    Buatan
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="ast_make" autocomplete="off" />
+                                                </td>
+                                                <td class="collapsing" colspan="">
+                                                    <div class="required field">
+                                                        <label>Harga Perolehan Asal (RM)</label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <input type="text"
+                                                        class="<%= boxColorValidate.find(e => e.param === 'ori_acq') ? 'invalid' : '' %>"
+                                                        name="ori_acq" value="<%= oldInput.ori_acq %>"
+                                                        autocomplete="off" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td rowspan="2">Jenis Dan No. Enjin</td>
+                                                <td rowspan="2">
+                                                    <input type="text" name="eng_no" autocomplete="off" autofocus />
+                                                </td>
+                                                <td>
+                                                    <div class="required field">
+                                                        <label>Tarikh Perolehan</label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <input type="date"
+                                                        class="<%= boxColorValidate.find(e => e.param === 'acq_dt') ? 'invalid' : '' %>"
+                                                        name="acq_dt" value="<%= oldInput.acq_dt %>" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="required field">
+                                                        <label>Tarikh Diterima</label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <input type="date"
+                                                        class="<%= boxColorValidate.find(e => e.param === 'rcv_dt') ? 'invalid' : '' %>"
+                                                        name="rcv_dt" value="<%= oldInput.rcv_dt %>" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="collapsing">
+                                                    <div class="required field">
+                                                        <label>No. Casis / Siri Pembuat</label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <input type="text"
+                                                        class="<%= boxColorValidate.find(e => e.param === 'casis') ? 'invalid' : '' %>"
+                                                        name="casis" value="<%= oldInput.casis %>" autocomplete="off" />
+                                                </td>
+                                                <td class="collapsing" colspan="">
+                                                    <div class="required field">
+                                                        <label>No. Pesanan Rasmi Kerajaan / Kontrak</label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <input type="text"
+                                                        class="<%= boxColorValidate.find(e => e.param === 'lOrder') ? 'invalid' : '' %>"
+                                                        name="lOrder" value="<%= oldInput.lOrder %>"
+                                                        autocomplete="off" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="collapsing">
+                                                    <div class="required field">
+                                                        <label>No. Pendaftaran (Bagi kenderaan)</label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <input type="text"
+                                                        class="<%= boxColorValidate.find(e => e.param === 'ast_reg') ? 'invalid' : '' %>"
+                                                        name="ast_reg" value="<%= oldInput.ast_reg %>"
+                                                        autocomplete="off" />
+                                                </td>
+                                                <td class="collapsing" colspan="">
+                                                    Tempoh Jaminan
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="wrnt" autocomplete="off" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="collapsing">
+                                                    <div class="required field">
+                                                        <label>Nama Pembekal</label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <select name="sup"
+                                                        class="ui fluid search dropdown <%= boxColorValidate.find(e => e.param === 'sup') ? 'invalid' : '' %>">
+                                                        <option value="">Pilih</option>
+                                                        <% suppliers.forEach(function(supplier) { %>
+                                                        <option value="<%= supplier._id %>"><%= supplier.supName %>
+                                                        </option>
+                                                        <% }); %>
+                                                    </select>
+                                                </td>
+                                                <td class="collapsing" colspan="">
+                                                    <div class="required field">
+                                                        <label>Alamat Pembekal</label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <select name="sup_addr"
+                                                        class="ui fluid search dropdown <%= boxColorValidate.find(e => e.param === 'supAddr') ? 'invalid' : '' %>"">
+                                                            <option value="">Pilih</option>
+                                                            <% suppliers.forEach(function(supplier) { %> 
+                                                            <option value="
+                                                        <%= supplier._id %>"><%= supplier.supAddr %></option>
+                                                        <% }); %>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <label>Spesifikasi / Catatan :</label>
+                                                    <textarea rows="2" name="spec"
+                                                        placeholder="Contoh Sumbangan Kerajaan Tempatan"></textarea>
+                                                </td>
+                                                <td colspan="2">
+                                                    <div class="grouped fields">
+                                                        <label for="fruit">Sila pilih kategori aset:</label>
+                                                        <div class="field">
+                                                            <div class="ui radio checkbox">
+                                                                <input type="radio" name="assets_category" value="movable_aset" checked
+                                                                    class="hidden">
+                                                                <label>Aset Alih</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="field">
+                                                            <div class="ui radio checkbox">
+                                                                <input type="radio" name="assets_category" value="immovable_aset"
+                                                                    class="hidden">
+                                                                <label>Aset Tak Alih</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                        <tfoot class="full-width">
+                                            <tr>
+                                                <th colspan="4">
+                                                    <button class="ui right floated small teal labeled icon button">
+                                                        <i class="pencil icon"></i> Daftar
+                                                    </button>
+                                                    <div class="ui small  button">
+                                                        Isi semula
+                                                    </div>
+                                                    <div class="ui small  disabled button">
+                                                        Approve All
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </form>
+
+
+
+
+
+
+
+
+                                <!-- <table class="ui celled structured table">
+                                        <thead>
+                                            <tr>
+                                                <td rowspan="2">Files</td>
+                                                <td rowspan="2">Files</td>
+                                                <td>Languages</td>
+                                                <td>Languages</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Ruby</td>
+                                                <td>JavaScript</td>
+                                            </tr>
+                                        </thead>
+                                    </table> -->
+
+                                <div class="ui inverted dimmer">
+                                    <div class="ui text loader">Loading</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--maincontent-->
+        </div>
+    </div>
+</div>
+
+<%- include('../../includes/footer.ejs') %>
+
+<script>
+    $('.tag.example .ui.dropdown')
+        .dropdown({ allowAdditions: true });
+</script>

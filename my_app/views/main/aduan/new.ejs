@@ -1,0 +1,124 @@
+<%- include('../../includes/header.ejs') %>
+
+</head>
+
+<body>
+
+    <div id="contextWrap">
+        <!--left sidebar-->
+        <%- include('../sidebar/left/sidebar-left.ejs') %>
+        <!--left sidebar-->
+
+        <!--rightsidebar-->
+
+        <!--rightsidebar-->
+
+        <div class="pusher">
+            <!--navbar-->
+            <%- include('../navbar/top.ejs') %>
+            <!--navbar-->
+
+            <!--maincontent-->
+            <div class="mainWrap navslide">
+                <div class="ui equal width left aligned padded grid stackable">
+                    <div class="row">
+                        <div class="sixteen wide tablet thirteen wide computer column">
+                            <div class="ui segment">
+                                <div class="ui breadcrumb">
+                                    <h3 class="section">ADUAN</h3>
+                                    <i class="right angle icon divider"></i>
+                                    <a class="section" href="/index">Laman Utama</a>
+                                    <div class="divider"> / </div>
+                                    <a class="section" href="/aduan">Senarai Aduan</a>
+                                    <div class="divider"> / </div>
+                                    <div class="section">Aduan Baru</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stretched row">
+                        <div class="sixteen wide tablet thirteen wide computer column">
+                            <div class="ui segments">
+                                <div class="ui segment no-padding-bottom">
+                                    <h5 class="ui left floated header">
+                                        Borang Aduan
+                                    </h5>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="ui segment left aligned">
+                                    <% if(errorMsg) { %>
+                                    <div class="ui negative message">
+                                        <i class="close icon"></i>
+                                        <div class="header">
+                                            <p><%= errorMsg %></p>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                    <form class="ui form" action="/aduan/new" method="POST" enctype="multipart/form-data">
+                                        <div class="field">
+                                            <label for="modul">Pilih Modul</label>
+                                            <select name="modul" id="modul" class="ui fluid search dropdown">
+                                                <option>Pilih Modul</option>
+                                                <option value="modul aset">Modul Aset</option>
+                                                <option value="modul peta">Modul Peta</option>
+                                                <option value="modul pembekal">Modul Pembekal</option>
+                                                <option value="modul profil">Profil</option>
+                                            </select>
+                                        </div>
+                                        <div class="field">
+                                            <label for="issue">Isu</label>
+                                            <input type="text" name="issue" id="issue" placeholder="" value="<%= oldInput.issue %>">
+                                        </div>
+                                        <div class="field">
+                                            <label for="attach">Muatnaik Foto</label>
+                                            <input id="attach" name="attach" type="file" />
+                                            <a class="ui pointing blue basic label">Sila muatnaik gambar dari format jpg, jpeg dan png sahaja</a>
+                                        </div>
+                                        <div class="field">
+                                            <label for="desc">Huraikan secara ringkas tentang isu ini</label>
+                                            <textarea name="desc" id="desc"><%= oldInput.desc %></textarea>
+                                        </div>
+                                        <div class="inline fields">
+                                            <label>Tanda klasifikasi isu :</label>
+                                            <div class="field">
+                                                <div class="ui radio checkbox">
+                                                    <input type="radio" name="priority" id="priority" value="tinggi">
+                                                    <label for="priority">Tinggi</label>
+                                                </div>
+                                            </div>
+                                            <div class="field">
+                                                <div class="ui radio checkbox">
+                                                    <input type="radio" name="priority" id="priority" value="sederhana">
+                                                    <label for="priority">Sederhana</label>
+                                                </div>
+                                            </div>
+                                            <div class="field">
+                                                <div class="ui radio checkbox">
+                                                    <input type="radio" name="priority" id="priority" value="rendah">
+                                                    <label for="priority">Rendah</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ui hidden divider"></div>
+                                        <button class="ui right floated primary button">Hantar</button>
+                                        <a href="/aduan" class="ui left floated button">Batal</a>
+                                    </form>
+                                    <br>
+                                    <br>
+
+                                    <div class="ui inverted dimmer">
+                                        <div class="ui text loader">Loading</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--maincontent-->
+            </div>
+        </div>
+    </div>
+
+    <%- include('../../includes/footer.ejs') %>

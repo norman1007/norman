@@ -1,0 +1,126 @@
+<%- include('../includes/header.ejs') %>
+
+<body>
+
+    <div id="contextWrap">
+        <!--left sidebar-->
+        <%- include('../main/sidebar/left/sidebar-left.ejs') %>
+        <!--left sidebar-->
+
+        <!--rightsidebar-->
+
+        <!--rightsidebar-->
+
+        <div class="pusher">
+            <!--navbar-->
+            <%- include('../main/navbar/top.ejs') %>
+            <!--navbar-->
+
+            <!--maincontent-->
+            <div class="mainWrap navslide">
+                <div class="ui equal width left aligned padded grid stackable">
+
+                    <div class="row">
+                        <div class="sixteen wide tablet sixteen wide computer column">
+                            <div class="ui segments">
+                                <div class="ui segment no-padding-bottom">
+                                    <div class="ui six doubling cards">
+                                        <div class="card" data-target="/user-list">
+                                            <a href="#" class="image">
+                                                <img src="/img/avatar/elliot.jpg">
+                                            </a>
+                                        </div>
+                                        <div class="card">
+                                            <div class="image">
+                                                <img src="/img/avatar/molly.png">
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="image">
+                                                <img src="/img/avatar/patrick.png">
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="image">
+                                                <img src="/img/avatar/kristy.png">
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="image">
+                                                <img src="/img/avatar/veronika.jpg">
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="image">
+                                                <img src="/img/avatar/elyse.png">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="ui segment">
+                                    <div class="ui grid">
+                                        <div class="stretched row">
+                                            <div class="sixteen wide tablet ten wide computer column">
+                                                <canvas id="chart_1" width="400" height="400"></canvas>
+                                            </div>
+                                            <div class="sixteen wide tablet six wide computer column">
+                                                <div class="ui horizontal large statistic">
+                                                    <div class="value counter">
+                                                        16,482
+                                                    </div>
+                                                    <div class="label">
+                                                        Your Profile Views
+                                                    </div>
+                                                </div>
+                                                <div id="flot-profile" class="flotchart"></div>
+                                                <table class="ui celled striped table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:10%">#</th>
+                                                            <th style="width:40%">Browser</th>
+                                                            <th style="width:25%">Sessions</th>
+                                                            <th style="width:25%">Up/Down</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>1</td>
+                                                            <td>Chrome</td>
+                                                            <td>4325</td>
+                                                            <td class="text-success">+3.26%</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>2</td>
+                                                            <td>Firefox</td>
+                                                            <td>3257</td>
+                                                            <td class="text-danger">-2.14%</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>3</td>
+                                                            <td>Edge</td>
+                                                            <td>2314</td>
+                                                            <td class="text-success">+2.92%</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!--maincontent-->
+            </div>
+        </div>
+    </div>
+
+    <%- include('../includes/footer.ejs') %></h1>
+    <script>
+        $('.menu .item')
+            .tab()
+            ;
+    </script>

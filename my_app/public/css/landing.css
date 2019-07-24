@@ -1,0 +1,241 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+    background-color: #fff;
+}
+
+#navbar-landing {
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+}
+
+#navbar-landing a {
+  color: #fff !important;
+  font-weight: 300;
+}
+
+#navbar-landing div {
+  color: #fff !important;
+  padding: 10px;
+}
+
+#landing-header {
+/*    z-index: -1;*/
+    position: relative;
+    text-align: center;
+    padding-top: 40vh; 
+}
+
+#landing-header h1 {
+  color: #fff;
+  z-index: -1;
+  text-transform: uppercase;
+  font-family: cursive;
+}
+
+#landing-header p {
+    text-transform: capitalize;
+  font-family: monospace;
+    color: #fff;
+}
+
+.slideshow {
+    position: inherit;
+    z-index: -1;
+    list-style: none;
+    width: 100%;
+    height: 50%;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.slideshow li { 
+  width: 100%;
+  height: 103%; /* slideshow banner */
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #000;
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  opacity: 0;
+  z-index: -1;
+  animation: imageAnimation 50s linear infinite; 
+}
+
+.landing-two-image {
+  display: inline;
+  padding-left: 20%;
+}
+
+.landing-two h3 {
+  text-transform: capitalize !important;
+  font-size: 16px !important;
+  font-family: cursive !important;
+}
+
+.landing-two .landing-two-h2 {
+  text-align: center;
+  text-transform: capitalize;
+  font-family: cursive;
+}
+
+.grid {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style: none;
+}
+
+hr {
+  padding: 0px;
+  margin: 0px;
+}
+
+.inside-landing-two-caraguna .grid li {
+  padding: 50px;
+  flex-basis: 50%;
+  text-align: center;
+}
+
+.inside-landing-two-caraguna .grid li i {
+  color: #8c9eff;
+}
+
+.inside-landing-two-caraguna .grid h4 {
+  text-transform: capitalize;
+  font-size: 15px;
+  margin: 25px 0;
+}
+
+.landing-three h3 {
+  text-transform: capitalize !important;
+  font-size: 16px !important;
+  font-family: cursive !important;
+}
+
+.landing-four .landing-four-h2 {
+  text-align: center;
+  text-transform: capitalize;
+  font-family: cursive;
+  padding-top: 20px;
+/*  font-size: 16px !important;*/
+}
+
+.landing-four h3 {
+  text-transform: capitalize !important;
+  font-size: 16px !important;
+  font-family: cursive !important;
+}
+
+.landing-four li::before {
+  list-style: none !important;
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #0070ba;
+  color: #fff;
+  padding: 20px 0;
+}
+
+footer p {
+  text-transform: uppercase;
+  font-size: 14px;
+  opacity: 8.6;
+  align-self: center;
+}
+
+footer a {
+  color: #fff !important;
+}
+
+.slideshow li:nth-child(1) { 
+  background-image: url(http://i.imgur.com/K3mPv14.jpg) 
+}
+.slideshow li:nth-child(2) { 
+  background-image: url(http://i.imgur.com/SBEmFpv.jpg);
+  animation-delay: 10s; 
+}
+.slideshow li:nth-child(3) { 
+  background-image: url(http://i.imgur.com/emvhOnb.jpg);
+  animation-delay: 20s; 
+}
+.slideshow li:nth-child(4) { 
+  background-image: url(http://i.imgur.com/2LSMCmJ.jpg);
+  animation-delay: 30s; 
+}
+.slideshow li:nth-child(5) { 
+  background-image: url(http://i.imgur.com/TVGe0Ef.jpg);
+  animation-delay: 40s; 
+}
+
+@keyframes imageAnimation { 
+  0% { 
+    opacity: 0; 
+    animation-timing-function: ease-in;
+  }
+  10% {
+    opacity: 1;
+    animation-timing-function: ease-out;
+  }
+  20% {
+    opacity: 1
+  }
+  30% {
+    opacity: 0
+  }
+}
+
+/*media query for responsive*/
+
+@media (max-width: 1100px) {
+  footer {
+    flex-direction: column;
+  }
+  
+  footer p {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

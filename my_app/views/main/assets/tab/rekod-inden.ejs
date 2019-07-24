@@ -1,0 +1,125 @@
+<form class="ui form" action="/index/assets/<%= asset._id %>/indens" method="POST">
+    <table class="ui celled table">
+        <thead class="center aligned">
+            <tr>
+                <th rowspan="2">Tarikh Kad Diambil</th>
+                <th>Pegawai Yang Menyerahkan Kad</th>
+                <th>Pemandu</th>
+                <th rowspan="2">Tarikh Dikembalikan</th>
+                <th>Penerima Kad Yang Dikembalikan</th>
+                <th colspan="2">Jumlah Diisi</th>
+                <th class="single line" rowspan="2">No. Resit</th>
+                <th rowspan="2">No Plat Kenderaan</th>
+            </tr>
+            <tr>
+                <th>Nama</th>
+                <!-- <th>Tanda Tangan</th> -->
+                <th>Nama</th>
+                <!-- <th>Tanda Tangan</th> -->
+                <th>Nama</th>
+                <!-- <th>Tanda Tangan</th> -->
+                <th>Liter</th>
+                <th>RM</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% p_kend.forEach(function(p_kend) { %>
+            <% if(currentUser.username === p_kend.p_kend_name.username) { %>
+            <tr>
+                <td>
+                    <!--Tarikh Kad Diambil-->
+                    <input type="text" name="indens[cardTaken]" id="from" autocomplete="off">
+                </td>
+                <td class="center aligned">
+                    <!--Nama Pegawai Yang Menyerahkan Kad-->
+                    <%= limitUserChatName(p_kend.p_kend_name.emp_name) %>
+                    <input type="hidden" name="indens[cardGivenBy]" id="" value="<%= p_kend.p_kend_name.emp_name %>">
+                </td>
+                <td>
+                    <!--Nama Pemandu-->
+                    <input type="text" name="indens[driver]" id="driver">
+                </td>
+                <td>
+                    <!--Tarikh Dikembalikan-->
+                    <input type="text" name="indens[cardReceiveDate]" id="to" autocomplete="off">
+                </td>
+                <td>
+                    <!--Nama Penerima Kad Yang Dikembalikan-->
+                    <input type="text" name="indens[returnCardReceiver]" id="returnCardReceiver">
+                </td>
+                <td>
+                    <!--Jumlah Diisi (Liter)-->
+                    <input width="20%" type="number" name="indens[liter]" step="any" id="liter">
+                </td>
+                <td>
+                    <!--Jumlah Diisi (RM)-->
+                    <input type="number" name="indens[amountFilled]" step="any" id="amountFilled">
+                </td>
+                <td>
+                    <!--No. Resit-->
+                    <input type="text" name="indens[receiptNumber]" id="receiptNumber">
+                </td>
+                <td class="center aligned">
+                    <!--No. Plate Kenderaan-->
+                    <%= asset.ast_reg %>
+                    <input type="hidden" name="indens[plateNumber]" id="" value="<%= asset.ast_reg %>">
+                </td>
+            </tr>
+            <tr>
+                <% if(indens.total !== 0) { %>
+                <td colspan="2">
+                    <a class="tiny fluid ui positive button" href="/print/indens/<%= asset._id %>">Cetak</a>
+                </td>
+                <td colspan="5"></td>
+                <% } else { %>
+                <td colspan="7"></td>
+                <% } %>
+                <td colspan="2">
+                    <button class="ui fluid primary button" onclick="return validateIndens()">Rekod</button>
+                </td>
+            </tr>
+            <% } %>
+            <% }); %>
+            <% if(indens.total !== 0) {%>
+            <% indens.docs.forEach(function(inden) { %>
+            <tr>
+                <td><%= inden.cardTaken.toLocaleDateString(); %></td>
+                <td data-tooltip="<%= inden.cardGivenBy %>" data-position="top center">
+                    <%= limitUserChatName(inden.cardGivenBy) %></td>
+                <td data-tooltip="<% if(inden.driver > limitUserChatName) { inden.driver } %>"
+                    data-position="top center"><%= limitUserChatName(inden.driver) %>
+                </td>
+                <td><%= inden.cardReceiveDate.toLocaleDateString(); %></td>
+                <td data-tooltip="<%= inden.returnCardReceiver %>" data-position="top center">
+                    <%= limitUserChatName(inden.returnCardReceiver) %></td>
+                <td><%= inden.liter %></td>
+                <td><%= formatNumber(inden.amountFilled) %></td>
+                <td><%= inden.receiptNumber %></td>
+                <td><%= inden.plateNumber %></td>
+            </tr>
+            <% p_kend.forEach(function(p_kend) { %>
+            <% if(currentUser.username === p_kend.p_kend_name.username) { %>
+            <tr>
+                <td colspan="7"></td>
+                <td colspan="2" class="center aligned">
+                    <form style="margin:0" id="" class="delete"
+                        action="/index/assets/<%= asset._id %>/indens/<%= inden._id %>?_method=DELETE" method="POST">
+                        <button type="submit"
+                            style="background-color: transparent; color:crimson; font-weight: bold; background-repeat: no-repeat; border: none; cursor: pointer; overflow: hidden;">
+                            Padam
+                            <i class="red trash icon"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            <% } %>
+            <% }); %>
+            <% }); %>
+            <% } else { %>
+            <tr class="center aligned">
+                <td colspan="9">Tiada rekod</td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+</form>

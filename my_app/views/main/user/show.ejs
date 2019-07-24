@@ -1,0 +1,694 @@
+<%- include('../../includes/header.ejs') %>
+
+</head>
+
+<body>
+
+    <div id="contextWrap">
+        <!--left sidebar-->
+        <%- include('../sidebar/left/sidebar-left.ejs') %>
+        <!--left sidebar-->
+
+        <!--rightsidebar-->
+
+        <!--rightsidebar-->
+
+        <div class="pusher">
+            <!--navbar-->
+            <%- include('../navbar/top.ejs') %>
+            <!--navbar-->
+
+            <!--maincontent-->
+            <div class="mainWrap navslide">
+                <div class="ui equal width left aligned padded grid stackable">
+                    <!-- ui equal width left aligned padded grid stackable -->
+
+                    <div class="stretched row">
+                        <div class="sixteen wide tablet thirteen wide computer column">
+
+                            <div class="ui top attached menu">
+                                <a class="active item">
+                                    Urus Akaun
+                                </a>
+                                <a class="item">
+                                    <% if(currentUser && currentUser.isAdmin) { %>
+                                    <div class="sub header">AKAUN PENGGUNA DALAM KEADAAN
+                                        <% if(user.isActive === true) { %>AKTIF<% } else { %>TIDAK AKTIF<% } %></div>
+                                    <% } else { %>
+                                    <div class="sub header">AKAUN ANDA DALAM KEADAAN AKTIF</div>
+                                    <% } %>
+                                </a>
+                            </div>
+                            <div class="ui attached segment">
+                                <div class="ui attached tabular menu">
+                                    <a class="active item" data-tab="first"><%= currentUser.username %></a>
+                                    <a class="item" data-tab="second">Kew.PA-3</a>
+                                    <a class="item" data-tab="third">Aduan</a>
+                                </div>
+                                <div class="ui bottom attached active tab segment" data-tab="first">
+
+                                    <div class="row">
+                                        <div class="sixteen wide tablet thirteen wide computer column">
+                                            <%- include('../../includes/flash-message.ejs') %>
+                                            <div class="ui basic segment">
+                                                <h5 class="ui header">
+                                                    <div class="ui grid">
+                                                        <div class="two wide column">
+                                                            <% if(!user.image) { %>
+                                                            <img class="ui tiny image" src="<%= user.image %>">
+                                                            <% } else { %>
+                                                            <img class="ui tiny image"
+                                                                src="/profile-saya/<%= currentUser._id %>/avatar">
+                                                            <% } %>
+                                                        </div>
+                                                        <div class="four wide column" style="margin: 2.5em 0em;">
+                                                            <h3 class="ui header"><%= user.emp_name %></h3>
+                                                        </div>
+                                                        <div class="two wide column ui center aligned"
+                                                            style="margin: 2.5em 0em;">
+                                                            <label class="ui orange label">No. Pekerja
+                                                                :<%= user.username %></label>
+                                                        </div>
+                                                        <div class="three wide column ui center aligned"
+                                                            style="margin: 2.5em 0em;">
+                                                            <p><%= user.department %></p>
+                                                        </div>
+                                                        <div class="two wide column ui center aligned"
+                                                            style="margin: 2.5em 0em;">
+                                                            <p><%= %></p>
+                                                        </div>
+                                                        <div class="three wide column ui center aligned"
+                                                            style="margin: 2em 0em;">
+                                                            <a id="test" class="ui yellowli button">
+                                                                <i class="edit outline icon"></i>
+                                                                Kemaskini
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </h5>
+                                            </div>
+                                            <div class="ui divider"></div>
+                                            <div class="ui modal test">
+                                                <i class="close icon"></i>
+                                                <div class="header">
+                                                    Mengemaskini Profil
+                                                </div>
+                                                <div class="content">
+                                                    <div class="description">
+                                                        <div class="ui header">Tukar peribadi anda</div>
+                                                        <form class="ui form segment form5"
+                                                            action="/profile-saya/<%= user._id %>?_method=PUT"
+                                                            method="POST" novalidate enctype="multipart/form-data">
+
+                                                            <div class="required two fields">
+                                                                <div class="field">
+                                                                    <label>Nama Pekerja</label>
+                                                                    <input class="" name="user[emp_name]"
+                                                                        autocomplete="off" value="<%= user.emp_name %>"
+                                                                        autofocus />
+                                                                </div>
+                                                                <div class="disabled field">
+                                                                    <label>No. Pekerja</label>
+                                                                    <input class="" name="user[username]" type="text"
+                                                                        value="<%= user.username %>"
+                                                                        autocomplete="off" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="two fields">
+                                                                <div class="field">
+                                                                    <label for="image">Foto</label>
+                                                                    <input name="user[image]" type="file" required />
+                                                                    <a class="ui pointing blue basic label">Sila
+                                                                        muatnaik gambar dari format
+                                                                        jpg, jpeg dan png sahaja</a>
+                                                                </div>
+                                                                <div class="field">
+                                                                    <% if(user.image !== "/uploads/profile/no-image.png") { %>
+                                                                    <div class="checkbox">
+                                                                        <img src="/profile-saya/<%= user._id %>/avatar"
+                                                                            width="50px">
+                                                                        <label><input type="checkbox"
+                                                                                name="removeImage">Padam foto
+                                                                            lama?</label>
+                                                                    </div>
+                                                                    <% } %>
+                                                                </div>
+                                                            </div>
+                                                            <div class="field">
+                                                                <label>Jawatan</label>
+                                                                <div class="ui dropdown selection" tabindex="0">
+                                                                    <select name="user[position]">
+                                                                        <option value="<%= user.position %>">
+                                                                            <%= user.position %></option>
+                                                                        <option
+                                                                            value="Setiausaha, Pegawai Tadbir Gred N41/N44">
+                                                                            Setiausaha, Pegawai Tadbir Gred N41/N44
+                                                                        </option>
+                                                                        <option
+                                                                            value="Penolong Pegawai Tadbir Gred N29/N32">
+                                                                            Penolong Pegawai Tadbir Gred N29/N32
+                                                                        </option>
+                                                                        <option
+                                                                            value="Pembantu Penguatkuasa Gred KP19/KP22">
+                                                                            Pembantu Penguatkuasa Gred KP19/KP22
+                                                                        </option>
+                                                                        <option
+                                                                            value="Penolong Jurutera Gred JA29/30/JA36">
+                                                                            Penolong Jurutera Gred JA29/30/JA36
+                                                                        </option>
+                                                                        <option
+                                                                            value="Pembantu Tadbir (Perkeranian/Operasi) Gred N19/N22">
+                                                                            Pembantu Tadbir (Perkeranian/Operasi) Gred
+                                                                            N19/N22
+                                                                        </option>
+                                                                        <option
+                                                                            value="Pembantu Tadbir (Perkeranian/Operasi) Gred N22/N26">
+                                                                            Pembantu Tadbir (Perkeranian/Operasi) Gred
+                                                                            N22/N26
+                                                                        </option>
+                                                                        <option value="Penghantar Notis Gred N11/N14">
+                                                                            Penghantar Notis Gred N11/N14
+                                                                        </option>
+                                                                        <option value="Pembantu Operasi Gred N11/N14">
+                                                                            Pembantu Operasi Gred N11/N14
+                                                                        </option>
+                                                                        <option value="Pemandu Kenderaan Gred H11/H14">
+                                                                            Pemandu Kenderaan Gred H11/H14
+                                                                        </option>
+                                                                        <option value="Penolong Akauntan Gred W29/W32">
+                                                                            Penolong Akauntan Gred W29/W32
+                                                                        </option>
+                                                                        <option
+                                                                            value="Penolong Pegawai Penilaian Gred W29/W32">
+                                                                            Penolong Pegawai Penilaian Gred W29/W32
+                                                                        </option>
+                                                                        <option value="Pembantu Awam Gred H11/H14">
+                                                                            Pembantu Awam Gred H11/H14
+                                                                        </option>
+                                                                        <option
+                                                                            value="Penolong Pegawai Perancang Bandar dan Desa Gred JA29/JA32">
+                                                                            Penolong Pegawai Perancang Bandar dan Desa
+                                                                            Gred JA29/JA32
+                                                                        </option>
+                                                                        <option
+                                                                            value="Penolong Pegawai Teknologi Maklumat">
+                                                                            Penolong Pegawai Teknologi Maklumat
+                                                                        </option>
+                                                                        <option
+                                                                            value="Penolong Pegawai Kesihatan Persekitaran/Pegawai Kesihatan Persekitaran Gred U29/U32">
+                                                                            Penolong Pegawai Kesihatan
+                                                                            Persekitaran/Pegawai Kesihatan
+                                                                            Persekitaran Gred U29/U32
+                                                                        </option>
+                                                                    </select>
+                                                                    <i class="dropdown icon"></i>
+                                                                    <div class="default text">Jawatan yang disandang
+                                                                    </div>
+                                                                    <div class="menu" tabindex="-1">
+                                                                        <div class="item"
+                                                                            data-value="Setiausaha, Pegawai Tadbir Gred N41/N44">
+                                                                            Setiausaha, Pegawai Tadbir Gred N41/N44
+                                                                        </div>
+                                                                        <div class="item"
+                                                                            data-value="Penolong Pegawai Tadbir Gred N29/N32">
+                                                                            Penolong Pegawai Tadbir Gred N29/N32
+                                                                        </div>
+                                                                        <div class="item"
+                                                                            data-value="Pembantu Penguatkuasa Gred KP19/KP22">
+                                                                            Pembantu Penguatkuasa Gred KP19/KP22
+                                                                        </div>
+                                                                        <div class="item"
+                                                                            data-value="Penolong Jurutera Gred JA29/30/JA36">
+                                                                            Penolong Jurutera Gred JA29/30/JA36
+                                                                        </div>
+                                                                        <div class="item"
+                                                                            data-value="Pembantu Tadbir (Perkeranian/Operasi) Gred N19/N22">
+                                                                            Pembantu Tadbir (Perkeranian/Operasi) Gred
+                                                                            N19/N22
+                                                                        </div>
+                                                                        <div class="item"
+                                                                            data-value="Pembantu Tadbir (Perkeranian/Operasi) Gred N22/N26">
+                                                                            Pembantu Tadbir (Perkeranian/Operasi) Gred
+                                                                            N22/N26
+                                                                        </div>
+                                                                        <div class="item"
+                                                                            data-value="Penghantar Notis Gred N11/N14">
+                                                                            Penghantar Notis Gred N11/N14
+                                                                        </div>
+                                                                        <div class="item"
+                                                                            data-value="Pembantu Operasi Gred N11/N14">
+                                                                            Pembantu Operasi Gred N11/N14
+                                                                        </div>
+                                                                        <div class="item"
+                                                                            data-value="Pemandu Kenderaan Gred H11/H14">
+                                                                            Pemandu Kenderaan Gred H11/H14
+                                                                        </div>
+                                                                        <div class="item"
+                                                                            data-value="Penolong Akauntan Gred W29/W32">
+                                                                            Penolong Akauntan Gred W29/W32
+                                                                        </div>
+                                                                        <div class="item"
+                                                                            data-value="Penolong Pegawai Penilaian Gred W29/W32">
+                                                                            Penolong Pegawai Penilaian Gred W29/W32
+                                                                        </div>
+                                                                        <div class="item"
+                                                                            data-value="Pembantu Awam Gred H11/H14">
+                                                                            Pembantu Awam Gred H11/H14
+                                                                        </div>
+                                                                        <div class="item"
+                                                                            data-value="Penolong Pegawai Perancang Bandar dan Desa Gred JA29/JA32">
+                                                                            Penolong Pegawai Perancang Bandar dan Desa
+                                                                            Gred JA29/JA32
+                                                                        </div>
+                                                                        <div class="item"
+                                                                            data-value="Penolong Pegawai Teknologi Maklumat">
+                                                                            Penolong Pegawai Teknologi Maklumat
+                                                                        </div>
+                                                                        <div class="item"
+                                                                            data-value="Penolong Pegawai Kesihatan Persekitaran/Pegawai Kesihatan Persekitaran Gred U29/U32">
+                                                                            Penolong Pegawai Kesihatan
+                                                                            Persekitaran/Pegawai Kesihatan
+                                                                            Persekitaran Gred U29/U32
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+
+                                                            <div class="required two fields">
+                                                                <div class="field">
+                                                                    <label>Email</label>
+                                                                    <input class="" name="user[email]" type="email"
+                                                                        autocomplete="off" value="<%= user.email %>"
+                                                                        required />
+                                                                </div>
+                                                                <div class="field">
+                                                                    <label>Jabatan</label>
+                                                                    <div class="ui dropdown selection" tabindex="0">
+                                                                        <select name="user[department]">
+                                                                            <option value="<%= user.department %>">
+                                                                                <%= user.department %></option>
+                                                                            <option
+                                                                                value="Jabatan Penilaian dan Pengurusan Harta">
+                                                                                Jabatan Penilaian dan Pengurusan Harta
+                                                                            </option>
+                                                                            <option value="Jabatan Kejuruteraan">Jabatan
+                                                                                Kejuruteraan
+                                                                            </option>
+                                                                            <option value="Bahagian Khidmat Pengurusan">
+                                                                                Bahagian Khidmat
+                                                                                Pengurusan</option>
+                                                                            <option value="Jabatan Perancang">Jabatan
+                                                                                Perancang</option>
+                                                                            <option value="Jabatan Perbendaharaan">
+                                                                                Jabatan
+                                                                                Perbendaharaan</option>
+                                                                            <option value="Unit IT">Unit IT</option>
+                                                                            <option
+                                                                                value="Jabatan Kesihatan Persekitaran">
+                                                                                Jabatan
+                                                                                Kesihatan Persekitaran</option>
+                                                                        </select>
+                                                                        <i class="dropdown icon"></i>
+                                                                        <div class="default text">Jabatan</div>
+                                                                        <div class="menu" tabindex="-1">
+
+                                                                            <div class="item"
+                                                                                data-value="Jabatan Penilaian dan Pengurusan Harta">
+                                                                                Jabatan Penilaian dan Pengurusan Harta
+                                                                            </div>
+                                                                            <div class="item"
+                                                                                data-value="Jabatan Kejuruteraan">
+                                                                                Jabatan
+                                                                                Kejuruteraan</div>
+                                                                            <div class="item"
+                                                                                data-value="Bahagian Khidmat Pengurusan">
+                                                                                Bahagian Khidmat Pengurusan</div>
+                                                                            <div class="item"
+                                                                                data-value="Jabatan Perancang">Jabatan
+                                                                                Perancang</div>
+                                                                            <div class="item"
+                                                                                data-value="Jabatan Perbendaharaan">
+                                                                                Jabatan Perbendaharaan</div>
+                                                                            <div class="item" data-value="Unit IT">Unit
+                                                                                IT</div>
+                                                                            <div class="item"
+                                                                                data-value="Jabatan Kesihatan Persekitaran">
+                                                                                Jabatan
+                                                                                Kesihatan Persekitaran</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <% if(currentUser && currentUser.isAdmin) { %>
+                                                            <div class="two fields">
+                                                                <div class="field">
+                                                                    <label>Peranan</label>
+                                                                    <div class="ui dropdown selection" tabindex="0">
+                                                                        <select name="user[isAdmin]">
+                                                                            <option value="<%= user.isAdmin %>">
+                                                                                <%= user.isAdmin %>
+                                                                            </option>
+                                                                            <option value="true">Sebagai Admin</option>
+                                                                            <option value="false">Sebagai Pengguna
+                                                                            </option>
+                                                                        </select>
+                                                                        <i class="dropdown icon"></i>
+                                                                        <div class="default text">Pilih Peranan</div>
+                                                                        <div class="menu" tabindex="-1">
+                                                                            <div class="item" data-value="true">Sebagai
+                                                                                Admin</div>
+                                                                            <div class="item" data-value="false">Sebagai
+                                                                                Pengguna</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="field">
+                                                                    <label>Status</label>
+                                                                    <div class="ui dropdown selection" tabindex="0">
+                                                                        <select name="user[isActive]">
+                                                                            <option value="<%= user.isActive %>">
+                                                                                <%= user.isActive %>
+                                                                            </option>
+                                                                            <option value="true">Aktif</option>
+                                                                            <option value="false">Tidak Aktif</option>
+                                                                        </select>
+                                                                        <i class="dropdown icon"></i>
+                                                                        <div class="default text">Status</div>
+                                                                        <div class="menu" tabindex="-1">
+                                                                            <div class="item" data-value="true">Aktif
+                                                                            </div>
+                                                                            <div class="item" data-value="false">Tidak
+                                                                                Aktif</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <% } %>
+                                                            <!-- <div class="ui segment">
+                                                                                <div class="field">
+                                                                                    <div class="ui toggle checkbox">
+                                                                                        <% let checked = user.isActive ? "checked" : "" %>
+                                                                                        <input type="checkbox" name="user[isActive]" class="hidden" <%= checked %> />
+                                                                                        
+                                                                                        <label>Tukar status pengguna ?</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div> -->
+                                                            <button
+                                                                class="ui right floated blue button">Kemaskini</button>
+                                                            <br />
+                                                            <br />
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="sixteen wide tablet thirteen wide computer column">
+                                            <form class="ui form basic segment"
+                                                action="/profile-saya/<%= currentUser._id %>/katalaluan" method="POST">
+                                                <h3 class="ui header">
+                                                    Tukar Katalaluan
+                                                </h3>
+                                                <div class="ui hidden divider"></div>
+                                                <div class="field">
+                                                    <label>Katalaluan lama</label>
+                                                    <input type="password" name="password" placeholder="Katalaluan lama"
+                                                        autocomplete="off">
+                                                </div>
+                                                <div class="field">
+                                                    <label>Katalaluan baharu</label>
+                                                    <input type="password" name="newPassword"
+                                                        placeholder="Katalaluan Baru" />
+                                                </div>
+                                                <div class="field">
+                                                    <label>Ulangi katalaluan</label>
+                                                    <input type="password" name="confirmPassword"
+                                                        placeholder="Taip Semula Katalaluan" />
+                                                </div>
+
+                                                <button type="submit" class="ui red button">Tukar</button>
+                                                <% if(error && error.length > 0) { %>
+                                                <div class="ui error message">
+                                                    <p><%= error %></p>
+                                                </div>
+                                                <% } %>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="ui bottom attached tab segment" data-tab="second">
+                                    <div class="ui center aligned secondary segment">
+                                        <div class="ui left icon action input">
+                                            <i class="search icon"></i>
+                                            <input type="text" placeholder="No. Fail Aset #">
+                                            <div class="ui blue submit button">Cari</div>
+                                        </div>
+                                    </div>
+
+                                    <% if(assets.total === 0) { %>
+                                    <table id="data_table"
+                                        class="ui compact selectable striped celled table tablet stackable"
+                                        cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>No. Fail Aset</th>
+                                                <th>Jenis Harta</th>
+                                                <th>No. ID</th>
+                                                <th>Jabatan</th>
+                                                <th>Tarikh</th>
+                                                <th>Papar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="center aligned">
+                                                <td colspan="6">Tiada rekod</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <% } else { %>
+                                    <table id="data_table"
+                                        class="ui compact selectable striped celled table tablet stackable"
+                                        cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>No. Fail Aset</th>
+                                                <th>Jenis Harta</th>
+                                                <th>No. ID</th>
+                                                <th>Jabatan</th>
+                                                <th>Tarikh</th>
+                                                <th>Papar</th>
+                                                <th>Kemaskini</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <% assets.docs.forEach(function(asset) { %>
+                                            <tr>
+                                                <td><%= asset.file_ast %></td>
+                                                <td><%= asset.cat %></td>
+                                                <td><%= asset.ast_reg %></td>
+                                                <td><%= asset.userId.department %></td>
+                                                <td><%= asset.createdAt.toLocaleDateString() %></td>
+                                                <td class="center aligned">
+                                                    <a class="ui icon basic button"
+                                                        href="/index/assets/<%= asset._id %>">
+                                                        <i class="envelope open outline icon"></i>
+                                                    </a>
+                                                </td>
+                                                <td class="center aligned">
+                                                    <a class="ui icon basic button"
+                                                        href="/index/assets/<%= asset._id %>/edit">
+                                                        <i class="edit outline icon"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <% }); %>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th colspan="7">
+                                                    Memaparkan <%= assetsCount %> dari <%= assets.pages %> halaman
+                                                    <% if(assets.pages && assets.pages > 0) { %>
+                                                    <div class="ui tiny right floated pagination menu">
+                                                        <% if(assets.page == 1) { %>
+                                                        <a class="disabled item"><i
+                                                                class="angle double left icon"></i></a>
+                                                        <% } else { %>
+                                                        <a class="item"
+                                                            href="/profile-saya/<%= user._id %>?page=<%= assets.page - 1 %>"><i
+                                                                class="angle double left icon"></i></a>
+                                                        <% } %>
+
+                                                        <% var i = (assets.page > 5 ? assets.page - 4 : 1) %>
+                                                        <% if(i !== 1) { %>
+                                                        <a class="disabled item">...</a>
+                                                        <% } %>
+                                                        <% for(; i <= (assets.page + 4) && i <= assets.pages; i++) { %>
+                                                        <% if( i == assets.page ) { %>
+                                                        <a class="active item"><%= i %></a>
+                                                        <% } else { %>
+                                                        <a class="item"
+                                                            href="/profile-saya/<%= user._id %>?page=<%= i %>"><%= i %></a>
+                                                        <% } %>
+                                                        <% if( i == assets.page + 4 && i < assets.pages ) { %>
+                                                        <a class="disabled item">...</a>
+                                                        <% } %>
+                                                        <% } %>
+
+                                                        <% if(assets.page == assets.pages) { %>
+                                                        <a class="disabled item"><i
+                                                                class="angle double right icon"></i></a>
+                                                        <% } else { %>
+                                                        <a class="item"
+                                                            href="/profile-saya/<%= user._id %>?page=<%= assets.pages %>"><i
+                                                                class="angle double right icon"></i></a>
+                                                        <% } %>
+                                                    </div>
+                                                    <% } %>
+                                                </th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    <% } %>
+                                </div>
+                                <div class="ui bottom attached tab segment" data-tab="third">
+                                    <div class="ui center aligned secondary segment">
+                                        <div class="ui left icon action input">
+                                            <i class="search icon"></i>
+                                            <input type="text" placeholder="Isu #">
+                                            <div class="ui blue submit button">Cari</div>
+                                        </div>
+                                    </div>
+
+                                    <% if(c.total === 0) { %>
+                                    <table id="data_table"
+                                        class="ui compact selectable striped celled table tablet stackable"
+                                        cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>No. Fail Aset</th>
+                                                <th>Jenis Harta</th>
+                                                <th>No. ID</th>
+                                                <th>Jabatan</th>
+                                                <th>Tarikh</th>
+                                                <th>Papar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="center aligned">
+                                                <td colspan="6">Tiada rekod</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <% } else { %>
+                                    <table id="data_table"
+                                        class="ui compact selectable striped celled table tablet stackable"
+                                        cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Isu</th>
+                                                <th>Keutamaan</th>
+                                                <th class="center aligned">Jabatan</th>
+                                                <th>Tarikh Aduan</th>
+                                                <th class="center aligned">Papar</th>
+                                                <th class="center aligned">Status</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <% c.docs.forEach(function(c) { %>
+                                            <tr>
+                                                <td><%= c.issue %></td>
+                                                <% if(c.priority === 'rendah') { %>
+                                                <td class=""><i class="attention icon"></i> <%= c.priority %></td>
+                                                <% } %>
+                                                <% if(c.priority === 'sederhana') { %>
+                                                <td class="warning"><i class="attention icon"></i> <%= c.priority %>
+                                                </td>
+                                                <% } %>
+                                                <% if(c.priority === 'tinggi') { %>
+                                                <td class="error"><i class="attention icon"></i> <%= c.priority %></td>
+                                                <% } %>
+                                                <td class="center aligned"><%= c.userId.department %></td>
+                                                <td><%= c.createdAt.toLocaleString(); %></td>
+                                                <td class="center aligned">
+                                                    <a class="ui icon basic button" href="/aduan/<%= c._id %>">
+                                                        <i class="envelope open outline icon"></i>
+                                                    </a>
+                                                </td>
+                                                <td class="center aligned">
+                                                    <% if(c.status !== true) { %>
+                                                    <p class="text-info">Sedang diproses</p>
+                                                    <% } %>
+                                                    <% if(c.status !== false) { %>
+                                                    <p class="text-success">Ditutup</p>
+                                                    <% } %>
+                                                </td>
+                                            </tr>
+                                            <% }); %>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th colspan="6">
+                                                    Memaparkan <%=  %> dari <%= c.pages %> halaman
+                                                    <% if(c.pages && c.pages > 0) { %>
+                                                    <div class="ui tiny right floated pagination menu">
+                                                        <% if(c.page == 1) { %>
+                                                        <a class="disabled item"><i
+                                                                class="angle double left icon"></i></a>
+                                                        <% } else { %>
+                                                        <a class="item"
+                                                            href="/profile-saya/<%= user._id %>?page=<%= c.page - 1 %>"><i
+                                                                class="angle double left icon"></i></a>
+                                                        <% } %>
+
+                                                        <% var i = (c.page > 5 ? c.page - 4 : 1) %>
+                                                        <% if(i !== 1) { %>
+                                                        <a class="disabled item">...</a>
+                                                        <% } %>
+                                                        <% for(; i <= (c.page + 4) && i <= c.pages; i++) { %>
+                                                        <% if( i == c.page ) { %>
+                                                        <a class="active item"><%= i %></a>
+                                                        <% } else { %>
+                                                        <a class="item"
+                                                            href="/profile-saya/<%= user._id %>?page=<%= i %>"><%= i %></a>
+                                                        <% } %>
+                                                        <% if( i == c.page + 4 && i < c.pages ) { %>
+                                                        <a class="disabled item">...</a>
+                                                        <% } %>
+                                                        <% } %>
+
+                                                        <% if(c.page == c.pages) { %>
+                                                        <a class="disabled item"><i
+                                                                class="angle double right icon"></i></a>
+                                                        <% } else { %>
+                                                        <a class="item"
+                                                            href="/profile-saya/<%= user._id %>?page=<%= c.pages %>"><i
+                                                                class="angle double right icon"></i></a>
+                                                        <% } %>
+                                                    </div>
+                                                    <% } %>
+                                                </th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    <% } %>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--maincontent-->
+            </div>
+        </div>
+    </div>
+
+    <%- include('../../includes/footer.ejs') %></h1>

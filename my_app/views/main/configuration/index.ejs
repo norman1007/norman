@@ -1,0 +1,255 @@
+<%- include('../../includes/header.ejs') %>
+
+<body>
+
+    <div id="contextWrap">
+        <!--left sidebar-->
+        <%- include('../sidebar/left/sidebar-left.ejs') %>
+        <!--left sidebar-->
+
+        <!--rightsidebar-->
+
+        <!--rightsidebar-->
+
+        <div class="pusher">
+            <!--navbar-->
+            <%- include('../navbar/top.ejs') %>
+            <!--navbar-->
+
+            <!--maincontent-->
+            <div class="mainWrap navslide">
+                <div class="ui equal width left aligned padded grid stackable">
+
+                    <div class="row">
+                        <div class="sixteen wide tablet sixteen wide computer column">
+                            <div class="ui segment">
+                                <div class="ui breadcrumb">
+                                    <h3 class="section">ASET</h3>
+                                    <i class="right angle icon divider"></i>
+                                    <a class="section" href="/index">Laman Utama</a>
+                                    <div class="divider"> / </div>
+                                    <div class="active section">Senarai Aset</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stretched row">
+
+                        <div class="sixteen wide tablet sixteen wide computer column">
+                            <div class="ui segments">
+
+                                <div class="ui segment">
+                                    <h3 class="ui dividing header">
+                                        Pegawai Pengawal
+                                    </h3>
+                                    <div class="ui six doubling centered cards">
+                                        <!--Pegawai Aset-->
+                                        <% if(p_aset.length !== 0) { %>
+                                        <% p_aset.forEach(function(p_aset) { %>
+                                        <div class="card">
+                                            <div class="content">
+                                                <img class="right floated mini ui image"
+                                                    src="/profile-saya/<%= p_aset.p_aset_name._id %>/avatar">
+                                                <div class="header">
+                                                    <%= p_aset.p_aset_name.username %>
+                                                </div>
+                                                <div class="meta">
+                                                    <%= p_aset.p_aset_name.emp_name %>
+                                                </div>
+                                                <div class="description">
+                                                    <%= p_aset.p_aset_name.department %><br>
+                                                    <%= p_aset.p_aset_name.position %>
+                                                </div>
+                                            </div>
+                                            <div class="extra content">
+                                                <div class="ui two buttons">
+                                                    <div class="ui basic green button">Lihat</div>
+                                                    <form
+                                                        action="/configuration/delete_p_asset/<%= p_aset._id %>?_method=DELETE"
+                                                        method="POST">
+                                                        <button class="ui basic red button">Padam</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% }); %>
+                                        <% }; %>
+
+                                        <!--Pegawai Kenderaan-->
+                                        <% if(p_kend.length !== 0) { %>
+                                        <% p_kend.forEach(function(p_kend) { %>
+                                        <div class="card">
+                                            <div class="content">
+                                                <img class="right floated mini ui image"
+                                                    src="/profile-saya/<%= p_kend.p_kend_name._id %>/avatar">
+                                                <div class="header">
+                                                    <%= p_kend.p_kend_name.username %>
+                                                </div>
+                                                <div class="meta">
+                                                    <%= p_kend.p_kend_name.emp_name %>
+                                                </div>
+                                                <div class="description">
+                                                    <%= p_kend.p_kend_name.department %><br>
+                                                    <%= p_kend.p_kend_name.position %>
+                                                </div>
+                                            </div>
+                                            <div class="extra content">
+                                                <div class="ui two buttons">
+                                                    <div class="ui basic green button">Approve</div>
+                                                    <form
+                                                        action="/configuration/delete_p_kend/<%= p_kend._id %>?_method=DELETE"
+                                                        method="POST">
+                                                        <button class="ui basic red button">Padam</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% }); %>
+                                        <% }; %>
+
+                                        <!--3 card-->
+                                        <div class="card">
+                                            <div class="content">
+                                                <img class="right floated mini ui image" src="/img/avatar/steve.jpg">
+                                                <div class="header">
+                                                    Steve Rogers
+                                                </div>
+                                                <div class="meta">
+                                                    Friends of Veronika
+                                                </div>
+                                                <div class="description">
+                                                    Steve requested permission to view your contact details
+                                                </div>
+                                            </div>
+                                            <div class="extra content">
+                                                <div class="ui two buttons">
+                                                    <div class="ui basic green button">Approve</div>
+                                                    <div class="ui basic red button">Decline</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--4 card-->
+                                        <div class="card">
+                                            <div class="content">
+                                                <img class="right floated mini ui image"
+                                                    src="/img/avatar/christian.jpg">
+                                                <div class="header">
+                                                    Christian
+                                                </div>
+                                                <div class="meta">
+                                                    Friends of Veronika
+                                                </div>
+                                                <div class="description">
+                                                    Christian requested permission to view your contact details
+                                                </div>
+                                            </div>
+                                            <div class="extra content">
+                                                <div class="ui two buttons">
+                                                    <div class="ui basic green button">Approve</div>
+                                                    <div class="ui basic red button">Decline</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h3 class="ui horizontal divider">Lantikan</h3>
+                                    <div class="ui top attached tabular menu">
+                                        <a class="active item" data-tab="first">Pegawai Aset</a>
+                                        <a class="item" data-tab="second">Pegawai Kenderaan</a>
+                                        <a class="item" data-tab="third">Pegawai Pemeriksa</a>
+                                        <a class="item" data-tab="fourth">Pegawai Verifikasi</a>
+                                    </div>
+                                    <div class="ui bottom attached active tab segment" data-tab="first">
+                                        <div class="ui hidden divider"></div>
+                                        <div class="ui centered grid">
+                                            <div class="six wide tablet eight wide computer column">
+                                                <% users.forEach(function(user) { %>
+                                                <form class="ui form" action="/configuration/new" method="POST"
+                                                    id="assetOfficer">
+                                                    <div class="ui middle aligned divided list">
+                                                        <div class="item">
+                                                            <div class="right floated content">
+                                                                <% if(p_aset.length >= 1 ) { %>
+                                                                <button class="ui disabled button">
+                                                                    Lantik
+                                                                </button>
+                                                                <% } else { %>
+                                                                <button class="ui button">Lantik</button>
+                                                                <% } %>
+                                                            </div>
+                                                            <img class="ui avatar image"
+                                                                src="/profile-saya/<%= user._id %>/avatar">
+                                                            <div class="content">
+                                                                <input type="hidden" id="id" value="<%= user._id %>"
+                                                                    name="p_aset_name">
+                                                                <input type="hidden" id="username"
+                                                                    value="<%= user.username %>" name="p_aset_username">
+                                                                <%= user.emp_name %>
+                                                            </div>
+                                                            <div class="ui divider"></div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <% }); %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ui bottom attached tab segment" data-tab="second">
+                                        <div class="ui hidden divider"></div>
+                                        <div class="ui centered grid">
+                                            <div class="six wide tablet eight wide computer column">
+                                                <% users.forEach(function(user) { %>
+                                                <form class="ui form" action="/configuration/p_kend" method="POST"
+                                                    id="">
+                                                    <div class="ui middle aligned divided list">
+                                                        <div class="item">
+                                                            <div class="right floated content">
+                                                                <% if(p_kend.length >= 1 ) { %>
+                                                                <button class="ui disabled button">
+                                                                    Lantik
+                                                                </button>
+                                                                <% } else { %>
+                                                                <button class="ui button">Lantik</button>
+                                                                <% } %>
+                                                            </div>
+                                                            <img class="ui avatar image"
+                                                                src="/profile-saya/<%= user._id %>/avatar">
+                                                            <div class="content">
+                                                                <input type="hidden" id="id" value="<%= user._id %>"
+                                                                    name="p_kend_name">
+                                                                <input type="hidden" id="username"
+                                                                    value="<%= user.username %>" name="p_kend_username">
+                                                                <%= user.emp_name %>
+                                                            </div>
+                                                            <div class="ui divider"></div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <% }); %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ui bottom attached tab segment" data-tab="third">
+                                        Pegawai Pemeriksa
+                                    </div>
+                                    <div class="ui bottom attached tab segment" data-tab="fourth">
+                                        Pegawai Verifikasi
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!--maincontent-->
+            </div>
+        </div>
+    </div>
+
+    <%- include('../../includes/footer.ejs') %></h1>
+    <script>
+        $('.menu .item')
+            .tab()
+            ;
+    </script>

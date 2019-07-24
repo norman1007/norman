@@ -1,0 +1,376 @@
+<%- include('../includes/header.ejs') %>
+<link rel="stylesheet" href="https://js.arcgis.com/3.28/esri/css/esri.css">
+
+<div id="contextWrap">
+    <!--left sidebar-->
+    <%- include('./sidebar/left/sidebar-left.ejs') %>
+    <!--left sidebar-->
+
+    <!--rightsidebar-->
+
+    <!--rightsidebar-->
+
+    <div class="pusher">
+        <!--navbar-->
+        <%- include('./navbar/top.ejs') %>
+        <!--navbar-->
+
+        <!--maincontent-->
+        <div class="mainWrap navslide">
+            <div class="ui equal width left aligned padded grid stackable">
+
+                <div class="stretched row">
+
+                    <div class="sixteen wide tablet ten wide computer column">
+                        <div class="ui segments">
+                            <div class="ui segment no-padding-bottom">
+                                <h5 class="ui left floated header">
+                                    Populer Browsers
+                                </h5>
+                                <h5 class="ui right floated header">
+                                    <select class="ui search dropdown">
+                                        <option value="">Tahun</option>
+                                        <option value="2019">2019</option>
+                                        <option value="2018">2018</option>
+                                        <option value="2017">2017</option>
+                                    </select>
+                                </h5>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="ui segment left aligned">
+                                <div id="chart1" class="ct-chart1"></div>
+                                <div class="ui inverted dimmer">
+                                    <div class="ui text loader">Loading</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sixteen wide tablet four wide computer column">
+                        <div class="ui segment">
+                            <h2 class="ui sub header">
+                                Price
+                            </h2>
+                            <span>$10.99</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!--navigation col 1-->
+                <div class="row">
+                    <div class="sixteen wide tablet sixteen wide computer column">
+                        <div class="ui segments">
+                            <div class="ui segment">
+                                <p>Analytics</p>
+                            </div>
+                            <div class="ui attached horizontal segments" style="margin: 0 0">
+                                <div class="ui segment">
+                                    <div class="ui left floated header">
+                                        <h4>Aset Tidak Alih</h4>
+                                    </div>
+                                    <div class="ui right floated header">
+                                        <a href="#" class="tiny ui primary basic button">Lihat Senarai</a>
+                                    </div>
+                                    <div class="ui hidden divider"></div>
+                                    <div id="chart2" class="ct-chart2"></div>
+                                </div>
+                                <div class="ui segment">
+                                    <div class="ui left floated header">
+                                        <h4>Aset Alih</h4>
+                                    </div>
+                                    <div class="ui right floated header">
+                                        <a href="/index/assets" class="tiny ui primary basic button">Lihat Senarai</a>
+                                    </div>
+                                    <div class="ui hidden divider"></div>
+                                    <!-- <canvas id="chart3" width="80px" height="40px"></canvas> -->
+                                    <div id="chart3" class="ct-chart3"></div>
+                                </div>
+                            </div>
+                            <div class="ui attached horizontal segments" style="margin: 0 0">
+                                <div class="ui segment">
+                                    <div id="chart4" class="ct-chart4"></div>
+                                </div>
+                                <div class="ui segment">
+                                    <div id="chart5" class="ct-chart5"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--navigation col 1-->
+
+                <!--navbar bottom-->
+                <%- include('./navbar/bottom.ejs') %>
+                <!--navbar bottom-->
+            </div>
+            <!--maincontent-->
+        </div>
+        <!--mainwrap navslide-->
+        <!--maincontent-->
+
+    </div>
+</div>
+
+<%- include('../includes/footer.ejs') %>
+<script src="/socket.io/socket.io.js" type="text/javascript"></script>
+<script src="/js/global.js" type="text/javascript"></script>
+<script src="https://js.arcgis.com/3.28/"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"
+    integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+
+<script>
+
+    // Render Line Chart
+    window.addEventListener('load', getLineChart);
+
+    /* Chart utk semua */
+    async function getLineChart() {
+        var chart = new Chartist.Line('.ct-chart1', {
+            labels: [1, 2, 3, 4, 5],
+            series: [
+                [1, 5, 10, 0, 1],
+                [10, 15, 0, 1, 2]
+            ]
+        },
+            {
+                // Remove this configuration to see that chart rendered with cardinal spline interpolation
+                // Sometimes, on large jumps in data values, it's better to use simple smoothing.
+                lineSmooth: Chartist.Interpolation.simple({
+                    divisor: 2
+                }),
+                fullWidth: true,
+                chartPadding: {
+                    right: 20
+                },
+                low: 0
+            });
+
+    };
+
+    /* Chart Aset Tidak Alih */
+    getUnmovableChart();
+    async function getUnmovableChart() {
+        new Chartist.Line('.ct-chart2', {
+            labels: [1, 2, 3, 4, 5, 6, 7, 8],
+            series: [
+                [1, 2, 3, 1, -2, 0, 1, 0],
+                [-2, -1, -2, -1, -2.5, -1, -2, -1],
+                [0, 0, 0, 1, 2, 2.5, 2, 1],
+                [2.5, 2, 1, 0.5, 1, 0.5, -1, -2.5]
+            ]
+        }, {
+                high: 3,
+                low: -3,
+                showArea: true,
+                showLine: false,
+                showPoint: false,
+                fullWidth: true,
+                axisX: {
+                    showLabel: false,
+                    showGrid: false
+                }
+            });
+    }
+
+    /* Chart Aset Alih */
+    window.addEventListener('load', getMovableChart);
+    async function getMovableChart() {
+        const result = await mtncData();
+
+        /*
+        * Using Chart JS
+        
+        var ctx = document.getElementById('chart3').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+        */
+
+        /*
+        * Using Chartist JS
+        */
+        new Chartist.Line('.ct-chart3', {
+            // ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+            labels: result.plateNumber,
+            series: 
+            [
+                result.sumMtnc,
+                // [2, 1, 3.5, 7, 3],
+                // [1, 3, 4, 5, 6]
+            ]
+        }, {
+                fullWidth: true,
+                chartPadding: {
+                    right: 20
+                }
+            });
+        
+
+    }
+
+    /* Maintainances Data */
+    async function mtncData() {
+        const data = await <%- JSON.stringify(maintainancesStat) %>
+
+        const plateNumber = []
+        const sumMtnc = []
+
+        data.forEach(row => {
+            console.log(row);
+            plateNumber.push(row._id)
+            sumMtnc.push(row.number)
+        });
+        return { plateNumber, sumMtnc };
+    }
+
+    /* Chart Chart4 */
+    chart4()
+    async function chart4() {
+        var chart = new Chartist.Line('.ct-chart4', {
+            labels: ['1', '2', '3', '4', '5', '6', '7', '8'],
+            // Naming the series with the series object array notation
+            series: [{
+                name: 'series-1',
+                data: [5, 2, -4, 2, 0, -2, 5, -3]
+            }, {
+                name: 'series-2',
+                data: [4, 3, 5, 3, 1, 3, 6, 4]
+            }, {
+                name: 'series-3',
+                data: [2, 4, 3, 1, 4, 5, 3, 2]
+            }]
+        }, {
+                fullWidth: true,
+                // Within the series options you can use the series names
+                // to specify configuration that will only be used for the
+                // specific series.
+                series: {
+                    'series-1': {
+                        lineSmooth: Chartist.Interpolation.step()
+                    },
+                    'series-2': {
+                        lineSmooth: Chartist.Interpolation.simple(),
+                        showArea: true
+                    },
+                    'series-3': {
+                        showPoint: false
+                    }
+                }
+            }, [
+                // You can even use responsive configuration overrides to
+                // customize your series configuration even further!
+                ['screen and (max-width: 320px)', {
+                    series: {
+                        'series-1': {
+                            lineSmooth: Chartist.Interpolation.none()
+                        },
+                        'series-2': {
+                            lineSmooth: Chartist.Interpolation.none(),
+                            showArea: false
+                        },
+                        'series-3': {
+                            lineSmooth: Chartist.Interpolation.none(),
+                            showPoint: true
+                        }
+                    }
+                }]
+            ]);
+    }
+
+    /* Chart Chart5 */
+    chart5()
+    async function chart5() {
+        var chart = new Chartist.Line('.ct-chart5', {
+            labels: ['1', '2', '3', '4', '5', '6', '7', '8'],
+            // Naming the series with the series object array notation
+            series: [{
+                name: 'series-1',
+                data: [5, 2, -4, 2, 0, -2, 5, -3]
+            }, {
+                name: 'series-2',
+                data: [4, 3, 5, 3, 1, 3, 6, 4]
+            }, {
+                name: 'series-3',
+                data: [2, 4, 3, 1, 4, 5, 3, 2]
+            }]
+        }, {
+                fullWidth: true,
+                // Within the series options you can use the series names
+                // to specify configuration that will only be used for the
+                // specific series.
+                series: {
+                    'series-1': {
+                        lineSmooth: Chartist.Interpolation.step()
+                    },
+                    'series-2': {
+                        lineSmooth: Chartist.Interpolation.simple(),
+                        showArea: true
+                    },
+                    'series-3': {
+                        showPoint: false
+                    }
+                }
+            }, [
+                // You can even use responsive configuration overrides to
+                // customize your series configuration even further!
+                ['screen and (max-width: 320px)', {
+                    series: {
+                        'series-1': {
+                            lineSmooth: Chartist.Interpolation.none()
+                        },
+                        'series-2': {
+                            lineSmooth: Chartist.Interpolation.none(),
+                            showArea: false
+                        },
+                        'series-3': {
+                            lineSmooth: Chartist.Interpolation.none(),
+                            showPoint: true
+                        }
+                    }
+                }]
+            ]);
+    }
+
+    // Render Esri Map
+    var map;
+
+    require(["esri/map", "dojo/domReady!"], function (Map) {
+        map = new Map("map", {
+            basemap: "topo",  //For full list of pre-defined basemaps, navigate to http://arcg.is/1JVo6Wd
+            center: [100.9666628, 5.0999996], // longitude, latitude 
+            zoom: 13
+        });
+    });
+</script>

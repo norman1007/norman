@@ -1,0 +1,229 @@
+<%- include('../../includes/header.ejs') %>
+
+</head>
+
+<body>
+
+    <div id="contextWrap">
+        <!--left sidebar-->
+        <%- include('../sidebar/left/sidebar-left.ejs') %>
+        <!--left sidebar-->
+
+        <!--rightsidebar-->
+
+        <!--rightsidebar-->
+
+        <div class="pusher">
+            <!--navbar-->
+            <%- include('../navbar/top.ejs') %>
+            <!--navbar-->
+
+            <!--maincontent-->
+            <div class="mainWrap navslide">
+                <div class="ui equal width left aligned padded grid stackable">
+                    <!-- ui equal width left aligned padded grid stackable -->
+
+                    <div class="row">
+                        <div class="sixteen wide tablet thirteen wide computer column">
+                            <div class="ui segment">
+                                <div class="ui breadcrumb">
+                                    <h3 class="section">PEMBEKAL</h3>
+                                    <i class="right angle icon divider"></i>
+                                    <a class="section" href="/index">Laman Utama</a>
+                                    <div class="divider"> / </div>
+                                    <a class="active section">Senarai Pembekal</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="sixteen wide tablet thirteen wide computer column">
+
+                            <% if(errorMsg) { %>
+                            <div class="ui negative message">
+                                <i class="close icon"></i>
+                                <div class="header">
+                                    <p><%= errorMsg %> !</p>
+                                </div>
+                            </div>
+                            <% } %>
+                            <% if(success && success.length > 0) { %>
+                            <div class="ui positive message">
+                                <i class="close icon"></i>
+                                <div class="center aligned">
+                                    <strong><%= success %></strong>
+                                </div>
+                            </div>
+                            <% } %>
+
+                            <div class="ui segments">
+
+                                <div class="ui segment center aligned">
+                                    <div class="ui icon header">
+                                        <i class="industry icon"></i>
+                                        <h3 class="ui header">
+                                            Lihat Senarai Pembekal
+                                            <div class="sub header">Sila daftar diruang ini dan senarai pembekal akan
+                                                dipapar pada borang KEW. PA-3</div>
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="ui yellow segment">
+
+                                    <div class="ui accordion">
+                                        <div class="title">
+                                            <i class="dropdown icon"></i>
+                                            Daftar Pembekal
+                                        </div>
+                                        <div class="content">
+                                            <div class="ui segment">
+                                                <form class="ui form" action="" method="POST">
+                                                    <div class="two fields">
+                                                        <div class="field">
+                                                            <label for="nama-syarikat">Syarikat</label>
+                                                            <input type="text" id="nama-syarikat" name="supName"
+                                                                class="<%= boxColorValidate.find(e => e.param === 'supName') ? 'invalid' : '' %>"
+                                                                placeholder="Isikan nama pembekal / Syarikat"
+                                                                value="<%= oldInput.supName %>">
+                                                        </div>
+                                                        <div class="field">
+                                                            <label for="alamat-syarikat">Alamat Syarikat</label>
+                                                            <input type="text" id="alamat-syarikat" name="supAddr"
+                                                                class="<%= boxColorValidate.find(e => e.param === 'supAddr') ? 'invalid' : '' %>"
+                                                                placeholder="Isikan alamat pembekal / syarikat"
+                                                                value="<%= oldInput.supAddr %>">
+                                                        </div>
+                                                    </div>
+                                                    <button class="ui submit button">Daftar</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="ui inverted dimmer">
+                                        <div class="ui text loader">Loading</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="sixteen wide column">
+                                    <div class="ui segments">
+                                        <div class="ui segment">
+                                            <h5 class="ui header">
+                                                Count rekod
+                                            </h5>
+                                        </div>
+                                        <div class="ui segment">
+                                            <table id="data_table"
+                                                class="ui compact selectable striped celled table tablet stackable"
+                                                cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nama Pembekal</th>
+                                                        <th>Alamat</th>
+                                                        <th>Tarikh</th>
+                                                        <th class="center aligned">Kemaskini</th>
+                                                        <th class="center aligned">Padam</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <% if(suppliers.docs.length !== 0) { %>
+                                                <% suppliers.docs.forEach(function(supplier) { %>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><%= supplier.supName %></td>
+                                                        <td><%= supplier.supAddr %></td>
+                                                        <td><%= supplier.createdAt.toLocaleDateString(); %></td>
+                                                        <td class="center aligned">
+                                                            <a href="#">
+                                                                <i class="large yellow edit outline icon"></i>
+                                                            </a>
+                                                        </td>
+                                                        <% if(currentUser && currentUser.isAdmin) { %>
+                                                            <td class="negative center aligned">
+                                                                <form style="margin:0" class="delete" action="/pembekal/<%= supplier._id %>?_method=DELETE" method="POST">
+                                                                    <button type="submit" style="background-color: transparent; color:crimson; font-weight: bold; background-repeat: no-repeat; border: none; cursor: pointer; overflow: hidden;">
+                                                                        <i class="large red trash icon"></i>
+                                                                    </button>
+                                                                </form>
+                                                            </td>
+                                                        <% } else { %>
+                                                            <td class="disabled negative center aligned">
+                                                                <del>
+                                                                    <i class="large red trash icon"></i>
+                                                                </del>
+                                                            </td>
+                                                        <% } %>
+                                                    </tr>
+                                                </tbody>
+                                                <% }); %>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th colspan="5">
+                                                            <% if(suppliers.pages && suppliers.pages > 0) { %>
+                                                            <div class="ui tiny right floated pagination menu">
+                                                                <% if(suppliers.page == 1) { %>
+                                                                <a class="disabled item"><i
+                                                                        class="angle double left icon"></i></a>
+                                                                <% } else { %>
+                                                                <a class="item"
+                                                                    href="/index/suppliers?page=<%= suppliers.page - 1 %>"><i
+                                                                        class="angle double left icon"></i></a>
+                                                                <% } %>
+
+                                                                <% var i = (suppliers.page > 5 ? suppliers.page - 4 : 1) %>
+                                                                <% if(i !== 1) { %>
+                                                                <a class="disabled item">...</a>
+                                                                <% } %>
+                                                                <% for(; i <= (suppliers.page + 4) && i <= suppliers.pages; i++) { %>
+                                                                <% if( i == suppliers.page ) { %>
+                                                                <a class="active item"><%= i %></a>
+                                                                <% } else { %>
+                                                                <a class="item"
+                                                                    href="/index/suppliers?page=<%= i %>"><%= i %></a>
+                                                                <% } %>
+                                                                <% if( i == suppliers.page + 4 && i < suppliers.pages ) { %>
+                                                                <a class="disabled item">...</a>
+                                                                <% } %>
+                                                                <% } %>
+
+                                                                <% if(suppliers.page == suppliers.pages) { %>
+                                                                <a class="disabled item"><i
+                                                                        class="angle double right icon"></i></a>
+                                                                <% } else { %>
+                                                                <a class="item"
+                                                                    href="/index/suppliers?page=<%= suppliers.pages %>"><i
+                                                                        class="angle double right icon"></i></a>
+                                                                <% } %>
+                                                            </div>
+                                                            <% } %>
+                                                        </th>
+                                                    </tr>
+                                                </tfoot>
+                                                <% } else { %>
+                                                <tbody>
+                                                    <tr class="center aligned">
+                                                        <td colspan="3">Tiada rekod</td>
+                                                    </tr>
+                                                </tbody>
+                                                <% } %>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <!--maincontent-->
+            </div>
+            <!--maincontent-->
+        </div>
+    </div>
+
+    <%- include('../../includes/footer.ejs') %>

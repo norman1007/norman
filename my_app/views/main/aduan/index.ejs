@@ -1,0 +1,196 @@
+<%- include('../../includes/header.ejs') %>
+
+</head>
+
+<body>
+
+    <div id="contextWrap">
+        <!--left sidebar-->
+        <%- include('../sidebar/left/sidebar-left.ejs') %>
+        <!--left sidebar-->
+
+        <!--rightsidebar-->
+
+        <!--rightsidebar-->
+
+        <div class="pusher">
+            <!--navbar-->
+            <%- include('../navbar/top.ejs') %>
+            <!--navbar-->
+
+            <!--maincontent-->
+            <div class="mainWrap navslide">
+                <div class="ui equal width left aligned padded grid stackable">
+                    <!-- ui equal width left aligned padded grid stackable -->
+
+                    <div class="row">
+                        <div class="sixteen wide tablet thirteen wide computer column">
+                            <div class="ui segment">
+                                <div class="ui breadcrumb">
+                                    <h3 class="section">ADUAN</h3>
+                                    <i class="right angle icon divider"></i>
+                                    <a class="section" href="/index">Laman Utama</a>
+                                    <div class="divider"> / </div>
+                                    <div class="section">Aduan Kerosakan</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stretched row">
+                        <div class="sixteen wide tablet thirteen wide computer column">
+                            <div class="ui segments">
+                                <div class="ui segment left aligned">
+                                    <div class="ui hidden divider"></div>
+                                    <div class="ui center aligned secondary segment">
+                                        <div class="ui labeled button" tabindex="0">
+                                            <div class="ui basic red button">
+                                                <i class="bullhorn icon"></i>
+                                            </div>
+                                            <a class="ui red left pointing label" href="/aduan/new">
+                                                Aduan Baru
+                                            </a>
+                                        </div>
+                                        <div class="ui horizontal divider">
+                                            Atau
+                                        </div>
+                                        <form action="/aduan" method="GET">
+                                            <div class="ui left icon action input">
+                                                <i class="search icon"></i>
+                                                <input type="text" name="search" placeholder="Isu #">
+                                                <button class="ui blue submit button">Cari</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="ui hidden divider"></div>
+                                    <h4 class="ui horizontal divider header">
+                                        <i class="tag icon"></i>
+                                        Senarai Aduan
+                                    </h4>
+                                    <div class="ui icon info message">
+                                        <i class="pin icon"></i>
+                                        <div class="content">
+                                            <div class="header">
+                                                Nota *
+                                            </div>
+                                            <p>Sila klik pada <i class="envelope open outline icon"></i> untuk maklumat
+                                                terperinci.</p>
+                                        </div>
+                                    </div>
+                                    <table class="ui celled table">
+                                        <thead>
+                                            <tr>
+                                                <th>Isu</th>
+                                                <th>Klasifikasi</th>
+                                                <th class="center aligned">Jabatan</th>
+                                                <th>Tarikh Aduan</th>
+                                                <th class="center aligned">Papar</th>
+                                                <th class="center aligned">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <% if(complaints.length !== 0) { %>
+                                        <tbody>
+                                            <% complaints.forEach(function(c) { %>
+                                            <tr>
+                                                <td><%= c.issue %></td>
+                                                <% if(c.priority === 'rendah') { %>
+                                                <td class=""><i class="attention icon"></i> <%= c.priority %></td>
+                                                <% } %>
+                                                <% if(c.priority === 'sederhana') { %>
+                                                <td class="warning"><i class="attention icon"></i> <%= c.priority %>
+                                                </td>
+                                                <% } %>
+                                                <% if(c.priority === 'tinggi') { %>
+                                                <td class="error"><i class="attention icon"></i> <%= c.priority %></td>
+                                                <% } %>
+                                                <td class="center aligned"><%= c.userId.department %></td>
+                                                <td><%= c.createdAt.toLocaleString(); %></td>
+                                                <td class="center aligned">
+                                                    <a class="ui icon basic button" href="/aduan/<%= c._id %>">
+                                                        <i class="envelope open outline icon"></i>
+                                                    </a>
+                                                </td>
+                                                <td class="center aligned">
+                                                    <% if(c.status !== true) { %>
+                                                    <!-- <p class="text-info">Sedang diproses</p> -->
+                                                    <label class="ui blueli label">Sedang diproses</label>
+                                                    <% } %>
+                                                    <% if(c.status !== false) { %>
+                                                    <!-- <p class="text-success">Ditutup</p> -->
+                                                    <label class="ui greenli label">Ditutup</label>
+                                                    <% } %>
+                                                </td>
+                                            </tr>
+                                            <% }); %>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th colspan="6">
+                                                    <% if(pages && pages > 0) { %>
+                                                    <div class="ui tiny right floated pagination menu">
+
+                                                        <% if(current == 1) { %>
+                                                        <a class="disabled item"><i
+                                                                class="angle double left icon"></i></a>
+                                                        <% } else { %>
+                                                        <a class="item"
+                                                            href="/aduan <% if(search) { %>?search=<%= search %><% } %>"><i
+                                                                class="angle double left icon"></i></a>
+                                                        <% } %>
+
+                                                        <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                                                        <% if(i !== 1) { %>
+                                                        <a class="disabled item">...</a>
+                                                        <% } %>
+                                                        <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                                                        <% if( i == current ) { %>
+                                                        <a class="active item"><%= i %></a>
+                                                        <% } else { %>
+                                                        <a class="item"
+                                                            href="/aduan?page=<%= i %><%if (search) { %>&search=<%= search %><% } %>"><%= i %></a>
+                                                        <% } %>
+                                                        <% if( i == Number(current) + 4 && i < pages) { %>
+                                                        <a class="disabled item">...</a>
+                                                        <% } %>
+                                                        <% } %>
+
+                                                        <% if(current == pages) { %>
+                                                        <a class="disabled item"><i
+                                                                class="angle double right icon"></i></a>
+                                                        <% } else { %>
+                                                        <a class="item"
+                                                            href="/aduan?page=<%= pages %><% if(search) { %>&search=<%= search %><% } %>"><i
+                                                                class="angle double right icon"></i></a>
+                                                        <% } %>
+
+                                                    </div>
+
+                                                    <% } %>
+                                                    <!-- end of pagination -->
+                                                </th>
+                                            </tr>
+                                        </tfoot>
+                                        <% } else { %>
+                                        <tbody>
+                                            <td class="center aligned" colspan="6">Tiada rekod</td>
+                                        </tbody>
+                                        <% } %>
+                                    </table>
+
+
+
+                                    <div class="ui inverted dimmer">
+                                        <div class="ui text loader">Loading</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--maincontent-->
+            </div>
+        </div>
+    </div>
+
+    <%- include('../../includes/footer.ejs') %>

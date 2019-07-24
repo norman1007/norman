@@ -1,0 +1,111 @@
+<% p_asset.forEach(function(p_asset) { %>
+<% if(currentUser.username === p_asset.p_aset_name.username) { %>
+<form class="ui form" action="/index/assets/<%= asset._id %>/placements" method="POST">
+    <div class="three fields">
+        <div class="field">
+            <label>Nama Pegawai</label>
+            <input type="text" name="placements[offName]" placeholder="" required>
+        </div>
+        <div class="field">
+            <label>Tarikh di tempatkan</label>
+            <input type="date" name="placements[plcDate]" placeholder="" required>
+        </div>
+        <div class="field">
+            <label>Lokasi aset</label>
+            <input type="text" name="placements[loc]" placeholder="" required>
+        </div>
+    </div>
+    <div class="field right floated">
+        <label for=""></label>
+        <button class="ui primary button">Rekod</button>
+    </div>
+</form>
+<div class="ui divider"></div>
+<% } %>
+<% }); %>
+<table class="ui celled table">
+    <% if(placements.total !== 0) { %>
+    <thead>
+        <tr>
+            <th>Nama pegawai</th>
+            <th>Tarikh di tempatkan</th>
+            <th>Lokasi aset</th>
+            <th>Tarikh direkod</th>
+            <th class="center aligned">Padam</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% placements.docs.forEach(function(plc) { %>
+        <tr>
+            <td data-label="Name"><%= plc.offName %></td>
+            <td data-label="Age"><%= plc.plcDate %></td>
+            <td data-label="Job"><%= plc.loc %></td>
+            <td><%= plc.createdAt.toLocaleString(); %></td>
+            <% if(currentUser && currentUser.isAdmin) { %>
+            <td class="negative center aligned">
+                <form style="margin:0" class="delete"
+                    action="/index/assets/<%= asset._id %>/placements/<%= plc._id %>?_method=DELETE" method="POST">
+                    <button type="submit"
+                        style="background-color: transparent; color:crimson; font-weight: bold; background-repeat: no-repeat; border: none; cursor: pointer; overflow: hidden;">
+                        Padam
+                        <i class="red trash icon"></i>
+                    </button>
+                </form>
+            </td>
+            <% } else { %>
+            <td class="disabled negative center aligned">
+                <del>
+                    Padam
+                    <i class="red trash icon"></i>
+                </del>
+            </td>
+            <% } %>
+        </tr>
+        <% }); %>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="5">
+                <!-- pagination buttons here -->
+                <div class="ui tiny right floated pagination menu">
+                    <% if(placements.page - 1) { %>
+                    <a href="/index/assets/<%= asset._id %>?page=<%= placements.page - 1 %>" class=" item"><i
+                            class="angle double left icon"></i></a>
+                    <% } else { %>
+                    <a class="disabled item"><i class="angle double left icon"></i></a>
+                    <% } %>
+
+                    <% if(placements.page !== 1) { %>
+                    <a href="/?page=<%= placements.page %>" class="active item"><%= placements.page %></a>
+                    <% } else { %>
+                    <a class="disabled item"><%= placements.page %></a>
+                    <% } %>
+
+                    <% if((placements.page + 1) <= placements.pages) { %>
+                    <a href="/index/assets/<%= asset._id %>?page=<%=  placements.page + 1 %>" class=" item"><i
+                            class="angle double right icon"></i></a>
+                    <% } else { %>
+                    <a class="disabled item"><i class="angle double right icon"></i></a>
+                    <% } %>
+                </div>
+                <!-- end pagination buttons -->
+            </th>
+        </tr>
+    </tfoot>
+    <% } else { %>
+    <thead>
+        <tr>
+            <th>Nama pegawai</th>
+            <th>Tarikh di tempatkan</th>
+            <th>Lokasi aset</th>
+            <th>Tarikh direkod</th>
+            <th class="center aligned">Padam</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="center aligned">
+            <td colspan="5">Tiada rekod</td>
+        </tr>
+    </tbody>
+    <% } %>
+</table>

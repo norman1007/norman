@@ -1,0 +1,98 @@
+<%- include('../../includes/header.ejs') %>
+
+</head>
+
+<body>
+
+    <div id="contextWrap">
+        <!--left sidebar-->
+        <%- include('../sidebar/left/sidebar-left.ejs') %>
+        <!--left sidebar-->
+
+        <!--rightsidebar-->
+
+        <!--rightsidebar-->
+
+        <div class="pusher">
+            <!--navbar-->
+            <%- include('../navbar/top') %>
+            <!--navbar-->
+
+            <!--maincontent-->
+            <div class="mainWrap navslide">
+                <div class="ui equal width left aligned padded grid stackable">
+                    <!-- ui equal width left aligned padded grid stackable -->
+
+                    <div class="stretched row">
+                        <div class="sixteen wide tablet thirteen wide computer column">
+                            <div class="ui segments">
+                                <div class="ui segment no-padding-bottom">
+                                    <h5 class="ui left floated header">
+                                        SENARAI CETAKAN
+                                    </h5>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="ui segment left aligned">
+                                    <table class="ui celled structured table">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2">No. Siri Pendaftaran</th>
+                                                <th class="center aligned" rowspan="2">No. Pendaftaran</th>
+                                                <th class="center aligned" colspan="2">Fail PDF</th>
+                                            </tr>
+                                            <tr class="center aligned">
+                                                <th>Kew.PA-3</th>
+                                                <th>Kew.PA-15</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% assets.forEach(function(print) { %>
+                                            <tr>
+                                                <td><%= print.file_ast %></td>
+                                                <td class="center aligned"><label
+                                                        class="ui label"><%= print.ast_reg %></label></td>
+                                                <td class="center aligned">
+                                                    <a class="ui vertical animated red basic button" tabindex="0"
+                                                        href="/print/kewpa3A/<%= print._id %>">
+                                                        <div class="hidden content">Cetak</div>
+                                                        <div class="visible content">
+                                                            <i class="file pdf outline icon"></i>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <% if(print.total === 0) { %>
+                                                <td class="center aligned">
+                                                    <a class="ui vertical animated blue basic button" tabindex="0"
+                                                        href="/print/kewpa15/<%= print._id %>">
+                                                        <div class="hidden content">Cetak</div>
+                                                        <div class="visible content">
+                                                            <i class="file pdf outline icon"></i>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <% } else { %>
+                                                <td class="center aligned">
+                                                    Kew.PA-15 belum direkod
+                                                </td>
+                                                <% } %>
+                                            </tr>
+                                            <% }); %>
+                                        </tbody>
+                                    </table>
+
+
+                                    <div class="ui inverted dimmer">
+                                        <div class="ui text loader">Loading</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--maincontent-->
+            </div>
+        </div>
+    </div>
+
+    <%- include('../../includes/footer.ejs') %>

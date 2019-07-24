@@ -1,0 +1,185 @@
+<table class="ui celled structured table">
+    <thead class="full-width">
+        <tr class="center aligned">
+            <th colspan="4">BAHAGIAN A</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="collapsing" colspan="2">
+                <div class="required field">
+                    <label><strong>No. Siri Pendaftaran</strong></label>
+                </div>
+            </td>
+            <td colspan="2">
+                <%= asset.file_ast %>
+            </td>
+        </tr>
+        <tr>
+            <td class="collapsing" colspan="2">
+                <strong>Kod Nasional</strong>
+            </td>
+            <td colspan="2">
+                <%= asset.nas_code %>
+            </td>
+        </tr>
+        <tr>
+            <td class="collapsing" colspan="2">
+                <div class="required field">
+                    <label><strong>Keterangan Aset</strong></label>
+                </div>
+            </td>
+            <td colspan="2">
+                <%= asset.ast_desc %>
+            </td>
+        </tr>
+        <tr>
+            <td class="collapsing" colspan="2">
+                <strong>Kategori</strong>
+            </td>
+            <td colspan="2">
+                <%= asset.cat %>
+            </td>
+        </tr>
+        <tr>
+            <td class="collapsing" colspan="2">
+                <strong>Sub Kategori</strong>
+            </td>
+            <td colspan="2">
+                <%= asset.sub_cat %>
+            </td>
+        </tr>
+        <tr>
+            <td class="collapsing" colspan="2">
+                <strong>Jenis/ Jenama/ Model</strong>
+            </td>
+            <td colspan="2">
+                <%= asset.ast_type %>
+            </td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                <strong>Buatan</strong>
+            </td>
+            <td>
+                <%= asset.ast_make %>
+            </td>
+            <td class="collapsing" colspan="">
+                <div class="required field">
+                    <label><strong>Harga Perolehan Asal (RM)</strong></label>
+                </div>
+            </td>
+            <td>
+                RM <%= formatNumber(asset.ori_acq) %>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="2"><strong>Jenis Dan No. Enjin</strong></td>
+            <td rowspan="2">
+                <%= asset.eng_no %>
+            </td>
+            <td>
+                <div class="required field">
+                    <label><strong>Tarikh Perolehan</strong></label>
+                </div>
+            </td>
+            <td>
+                <% if(asset !== 0) { %><%= asset.acq_dt %><% } else { %>Tiada
+                rekod<% } %>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="required field">
+                    <label><strong>Tarikh Diterima</strong></label>
+                </div>
+            </td>
+            <td>
+                <% if(asset !== 0) { %><%= asset.rcv_dt %><% } else { %>Tiada
+                rekod<% } %>
+            </td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                <div class="required field">
+                    <label><strong>No. Casis / Siri Pembuat</strong></label>
+                </div>
+            </td>
+            <td>
+                <%= asset.casis %>
+            </td>
+            <td class="collapsing" colspan="">
+                <div class="required field">
+                    <label><strong>No. Pesanan Rasmi Kerajaan /
+                            Kontrak</strong></label>
+                </div>
+            </td>
+            <td>
+                <%= asset.lOrder %>
+            </td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                <div class="required field">
+                    <label><strong>No. Pendaftaran (Bagi
+                            kenderaan)</strong></label>
+                </div>
+            </td>
+            <td>
+                <%= asset.ast_reg %>
+            </td>
+            <td class="collapsing" colspan="">
+                <strong>Tempoh Jaminan</strong>
+            </td>
+            <td>
+                <%= asset.wrnt %>
+            </td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                <div class="required field">
+                    <label><strong>Nama Pembekal</strong></label>
+                </div>
+            </td>
+            <td>
+                <% if(!asset) { %>
+                Nama pembekal telah dipadam
+                <% } else { %>
+                <%= asset.sup.supName %>
+                <% } %>
+
+            </td>
+            <td class="collapsing" colspan="">
+                <div class="required field">
+                    <label><strong>Alamat Pembekal</strong></label>
+                </div>
+            </td>
+            <td>
+                <% if(!asset) { %>
+                Nama pembekal telah dipadam
+                <% } else { %>
+                <%= asset.sup.supAddr %>
+                <% } %>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <label><strong>Spesifikasi / Catatan :</strong></label>
+                <%- asset.spec %>
+            </td>
+        </tr>
+    </tbody>
+    <% p_asset.forEach(function(p_asset) { %>
+    <% if(currentUser.username === p_asset.p_aset_name.username) { %>
+    <tfoot class="full-width">
+        <tr>
+            <th colspan="4">
+                <a class="ui small button" href="/print/kewpa3A/<%= asset._id %>">
+                    Cetak Kew.PA
+                </a>
+            </th>
+        </tr>
+    </tfoot>
+    <% } %>
+    <% }) %>
+</table>

@@ -1,0 +1,14 @@
+/* this class for change color when validate the input fields */
+.ui.form input.invalid {
+    background: #fff6f6;
+    border-color: #e0b4b4;
+    color: #9f3a38;
+    box-shadow: none;
+}
+
+.ui.form div.ui.fluid.search.dropdown.invalid {
+    background: #fff6f6;
+    border-color: #e0b4b4;
+    color: #9f3a38;
+    box-shadow: none;
+}
